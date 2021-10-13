@@ -1,0 +1,9 @@
+{
+	"name": "adf-sds",
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b523ddf6-6e59-428e-b810-1b7ce354819c",
+		"tenantId": "a8dd2cdb-9505-4b24-aeb3-d9272d7d3bf3"
+	}
+}

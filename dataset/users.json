@@ -1,5 +1,5 @@
 {
-	"name": "courses",
+	"name": "users",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "school_marcus",
@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "courses.csv",
+				"fileName": "users.csv",
 				"container": "demo"
 			},
 			"columnDelimiter": ",",
@@ -27,27 +27,35 @@
 				"type": "String"
 			},
 			{
-				"name": "orgSourcedId",
+				"name": "username",
 				"type": "String"
 			},
 			{
-				"name": "title",
+				"name": "givenName",
 				"type": "String"
 			},
 			{
-				"name": "code",
+				"name": "familyName",
 				"type": "String"
 			},
 			{
-				"name": "schoolYearSourcedId",
+				"name": "password",
 				"type": "String"
 			},
 			{
-				"name": "subject",
+				"name": "activeDirectoryMatchId",
 				"type": "String"
 			},
 			{
-				"name": "grade",
+				"name": "email",
+				"type": "String"
+			},
+			{
+				"name": "phone",
+				"type": "String"
+			},
+			{
+				"name": "sms",
 				"type": "String"
 			}
 		]

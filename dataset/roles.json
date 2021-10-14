@@ -1,5 +1,5 @@
 {
-	"name": "courses",
+	"name": "roles",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "school_marcus",
@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "courses.csv",
+				"fileName": "roles.csv",
 				"container": "demo"
 			},
 			"columnDelimiter": ",",
@@ -23,7 +23,7 @@
 		},
 		"schema": [
 			{
-				"name": "sourcedId",
+				"name": "userSourcedId",
 				"type": "String"
 			},
 			{
@@ -31,23 +31,27 @@
 				"type": "String"
 			},
 			{
-				"name": "title",
+				"name": "role",
 				"type": "String"
 			},
 			{
-				"name": "code",
-				"type": "String"
-			},
-			{
-				"name": "schoolYearSourcedId",
-				"type": "String"
-			},
-			{
-				"name": "subject",
+				"name": "sessionSourcedId",
 				"type": "String"
 			},
 			{
 				"name": "grade",
+				"type": "String"
+			},
+			{
+				"name": "isPrimary",
+				"type": "String"
+			},
+			{
+				"name": "roleStartDate",
+				"type": "String"
+			},
+			{
+				"name": "roleEndDate",
 				"type": "String"
 			}
 		]

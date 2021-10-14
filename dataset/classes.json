@@ -5,6 +5,9 @@
 			"referenceName": "school_marcus",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "csv_21"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

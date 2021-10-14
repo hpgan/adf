@@ -1,5 +1,5 @@
 {
-	"name": "courses",
+	"name": "userflags",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "school_marcus",
@@ -13,41 +13,18 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "courses.csv",
+				"fileName": "userflags.csv",
 				"container": "demo"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
-			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
-				"name": "sourcedId",
 				"type": "String"
 			},
 			{
-				"name": "orgSourcedId",
-				"type": "String"
-			},
-			{
-				"name": "title",
-				"type": "String"
-			},
-			{
-				"name": "code",
-				"type": "String"
-			},
-			{
-				"name": "schoolYearSourcedId",
-				"type": "String"
-			},
-			{
-				"name": "subject",
-				"type": "String"
-			},
-			{
-				"name": "grade",
 				"type": "String"
 			}
 		]

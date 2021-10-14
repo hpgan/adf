@@ -1,0 +1,44 @@
+{
+	"name": "classes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "school_marcus",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "classes.csv",
+				"container": "demo"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "sourcedId",
+				"type": "String"
+			},
+			{
+				"name": "orgSourcedId",
+				"type": "String"
+			},
+			{
+				"name": "title",
+				"type": "String"
+			},
+			{
+				"name": "sessionSourcedIds",
+				"type": "String"
+			},
+			{
+				"name": "courseSourcedId",
+				"type": "String"
+			}
+		]
+	}
+}

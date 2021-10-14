@@ -1,0 +1,56 @@
+{
+	"name": "enrollments",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "school_marcus",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "demographics.csv",
+				"container": "demo"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "userSourcedId",
+				"type": "String"
+			},
+			{
+				"name": "sex",
+				"type": "String"
+			},
+			{
+				"name": "birthDate",
+				"type": "String"
+			},
+			{
+				"name": "birthCity",
+				"type": "String"
+			},
+			{
+				"name": "birthState",
+				"type": "String"
+			},
+			{
+				"name": "birthCountry",
+				"type": "String"
+			},
+			{
+				"name": "ethnicityCodes",
+				"type": "String"
+			},
+			{
+				"name": "raceCodes",
+				"type": "String"
+			}
+		]
+	}
+}

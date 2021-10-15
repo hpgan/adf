@@ -1,5 +1,5 @@
 {
-	"name": "rd_orgs2",
+	"name": "rd_orgs_2",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "school_marcus",

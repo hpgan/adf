@@ -5,9 +5,9 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "orgs",
-						"type": "DatasetReference"
+					"linkedService": {
+						"referenceName": "school_marcus",
+						"type": "LinkedServiceReference"
 					},
 					"name": "org"
 				}
@@ -22,7 +22,7 @@
 					"name": "Flatten1"
 				}
 			],
-			"script": "source(output(\n\t\tsourcedId as string,\n\t\tname as string,\n\t\ttype as string,\n\t\tparentSourcedId as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> org\norg foldDown(unroll(),\n\tmapColumn(\n\t\tsourcedId,\n\t\tname,\n\t\ttype,\n\t\tparentSourcedId\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tstore: 'cache',\n\tformat: 'inline',\n\toutput: false,\n\tsaveOrder: 1) ~> sink1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'json',\n\tcontainer: 'raw-data',\n\tfileName: 'orgs.json',\n\tdocumentForm: 'singleDocument') ~> org\norg foldDown(unroll(),\n\tmapColumn(\n\t\tsourcedId,\n\t\tname,\n\t\ttype,\n\t\tparentSourcedId\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tstore: 'cache',\n\tformat: 'inline',\n\toutput: false,\n\tsaveOrder: 1) ~> sink1"
 		}
 	}
 }

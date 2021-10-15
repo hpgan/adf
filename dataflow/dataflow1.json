@@ -5,10 +5,6 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "rd_orgs_1",
-						"type": "DatasetReference"
-					},
 					"name": "org"
 				}
 			],
@@ -22,7 +18,7 @@
 					"name": "Flatten1"
 				}
 			],
-			"script": "source(output(\n\t\tsourcedId as integer,\n\t\tname as string,\n\t\ttype as string,\n\t\tparentSourcedId as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tignoreNoFilesFound: false,\n\tdocumentForm: 'documentPerLine') ~> org\norg foldDown(unroll(),\n\tmapColumn(\n\t\tsourcedId,\n\t\tname,\n\t\ttype,\n\t\tparentSourcedId\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tstore: 'cache',\n\tformat: 'inline',\n\toutput: false,\n\tsaveOrder: 1) ~> sink1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> org\norg foldDown(unroll(),\n\tmapColumn(\n\t\tsourcedId,\n\t\tname,\n\t\ttype,\n\t\tparentSourcedId\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tstore: 'cache',\n\tformat: 'inline',\n\toutput: false,\n\tsaveOrder: 1) ~> sink1"
 		}
 	}
 }

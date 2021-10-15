@@ -1,0 +1,9 @@
+{
+	"name": "qy_orgs",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": []
+		}
+	}
+}

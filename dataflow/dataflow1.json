@@ -9,12 +9,16 @@
 						"referenceName": "rd_orgs_1",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "org"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(output(\n\t\tsourcedId as integer,\n\t\tname as string,\n\t\ttype as string,\n\t\tparentSourcedId as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tdocumentForm: 'documentPerLine') ~> source1"
+			"transformations": [
+				{
+					"name": "Flatten1"
+				}
+			],
+			"script": "source(output(\n\t\tsourcedId as integer,\n\t\tname as string,\n\t\ttype as string,\n\t\tparentSourcedId as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tignoreNoFilesFound: false,\n\tdocumentForm: 'documentPerLine') ~> org\norg foldDown(unroll(),\n\tmapColumn(\n\t\tsourcedId,\n\t\tname,\n\t\ttype,\n\t\tparentSourcedId\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1"
 		}
 	}
 }

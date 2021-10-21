@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://kv-sds.vault.azure.net/secrets/v-sds/86fc803f85624b318975671a6a609c51",
+					"url": "https://kv-sds.vault.azure.net/secrets/v-sds/86fc803f85624b318975671a6a609c51?api-version=7.0",
 					"method": "GET",
 					"authentication": {
 						"type": "MSI",

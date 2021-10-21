@@ -1,0 +1,95 @@
+{
+	"name": "SDS_Section_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADL",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"directory": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "SchoolDataSync"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().directory",
+					"type": "Expression"
+				},
+				"fileSystem": "sds"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "SIS ID",
+				"type": "String"
+			},
+			{
+				"name": "School SIS ID",
+				"type": "String"
+			},
+			{
+				"name": "Section Name",
+				"type": "String"
+			},
+			{
+				"name": "Section Number",
+				"type": "String"
+			},
+			{
+				"name": "Term SIS ID",
+				"type": "String"
+			},
+			{
+				"name": "Term Name",
+				"type": "String"
+			},
+			{
+				"name": "Term StartDate",
+				"type": "String"
+			},
+			{
+				"name": "Term EndDate",
+				"type": "String"
+			},
+			{
+				"name": "Course SIS ID",
+				"type": "String"
+			},
+			{
+				"name": "Course Name",
+				"type": "String"
+			},
+			{
+				"name": "Course Number",
+				"type": "String"
+			},
+			{
+				"name": "Course Description",
+				"type": "String"
+			},
+			{
+				"name": "Course Subject",
+				"type": "String"
+			},
+			{
+				"name": "Periods",
+				"type": "String"
+			},
+			{
+				"name": "Status",
+				"type": "String"
+			}
+		]
+	}
+}

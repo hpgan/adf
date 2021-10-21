@@ -1,0 +1,238 @@
+{
+	"name": "validate_SDS_CSVs",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SDS_School_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceSchoolsCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Student_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceStudentCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Teacher_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceTeacherCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_StudentEnrollment_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceStudentEnrollmentCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_TeacherRoster_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceTeacherRosterCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Section_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceSectionCsv"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SDS_Validation_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkValidationErrorsCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Section_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkValidatedSectionCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_School_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkValidatedSchoolCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Student_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkValidatedStudentCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Teacher_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkValidatedTeacherCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_TeacherRoster_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkValidatedTeacherRosterCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_StudentEnrollment_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkValidatedStudentEnrollmentsCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_School_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkInvalidSchoolCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Student_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkInvalidStudentCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Teacher_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkInvalidTeacherCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_StudentEnrollment_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkInvalidEnrollments"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_TeacherRoster_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkInvalidTeacherRosterCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Section_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkInvalidSectionCsv"
+				}
+			],
+			"transformations": [
+				{
+					"name": "schoolValidations"
+				},
+				{
+					"name": "schoolErrors"
+				},
+				{
+					"name": "ConditionalSplit1"
+				},
+				{
+					"name": "studentValidations"
+				},
+				{
+					"name": "ConditionalSplit8"
+				},
+				{
+					"name": "studentErrors"
+				},
+				{
+					"name": "teacherValidations"
+				},
+				{
+					"name": "ConditionalSplit2"
+				},
+				{
+					"name": "teacherErrors"
+				},
+				{
+					"name": "enrollmentValidations"
+				},
+				{
+					"name": "enrollmentErrors"
+				},
+				{
+					"name": "rosterValidations"
+				},
+				{
+					"name": "teacherRosterErrors"
+				},
+				{
+					"name": "Union1"
+				},
+				{
+					"name": "addDate"
+				},
+				{
+					"name": "ConditionalSplit3"
+				},
+				{
+					"name": "ConditionalSplit4"
+				},
+				{
+					"name": "sectionValidations"
+				},
+				{
+					"name": "ConditionalSplit9"
+				},
+				{
+					"name": "sectionErrors"
+				},
+				{
+					"name": "JoinSchool"
+				},
+				{
+					"name": "JoinTeacherRoster"
+				},
+				{
+					"name": "JoinTeacher"
+				},
+				{
+					"name": "JoinStudentEnrollments"
+				},
+				{
+					"name": "DedupSectionRecords"
+				},
+				{
+					"name": "RenameWithTeacherUsername"
+				},
+				{
+					"name": "RenameSectionColumns"
+				},
+				{
+					"name": "RenameWithTeacherId"
+				},
+				{
+					"name": "validEnrollmentsWithValidStudents"
+				},
+				{
+					"name": "validEnrollmentsWithValidStudentsFinal"
+				}
+			],
+			"script": "source(output(\n\t\t{SIS ID} as string,\n\t\tName as string,\n\t\t{School Number} as string,\n\t\t{School NCES_ID} as string,\n\t\t{State ID} as string,\n\t\t{Grade Low} as string,\n\t\t{Grade High} as string,\n\t\t{Principal SIS ID} as string,\n\t\t{Principal Name} as string,\n\t\t{Principal Secondary Email} as string,\n\t\tAddress as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tCountry as string,\n\t\tZip as string,\n\t\tPhone as string,\n\t\tZone as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: true,\n\tignoreNoFilesFound: false) ~> sourceSchoolsCsv\nsource(output(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Secondary Email} as string,\n\t\t{Student Number} as string,\n\t\t{Middle Name} as string,\n\t\tGrade as string,\n\t\tStatus as string,\n\t\tBirthdate as string,\n\t\t{Graduation Year} as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: true,\n\tignoreNoFilesFound: false) ~> sourceStudentCsv\nsource(output(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Teacher Number} as string,\n\t\tStatus as string,\n\t\t{Middle Name} as string,\n\t\t{Secondary Email} as string,\n\t\tTitle as string,\n\t\tQualification as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: true,\n\tignoreNoFilesFound: false) ~> sourceTeacherCsv\nsource(output(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: true,\n\tignoreNoFilesFound: false) ~> sourceStudentEnrollmentCsv\nsource(output(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> sourceTeacherRosterCsv\nsource(output(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{Section Name} as string,\n\t\t{Section Number} as string,\n\t\t{Term SIS ID} as string,\n\t\t{Term Name} as string,\n\t\t{Term StartDate} as string,\n\t\t{Term EndDate} as string,\n\t\t{Course SIS ID} as string,\n\t\t{Course Name} as string,\n\t\t{Course Number} as string,\n\t\t{Course Description} as string,\n\t\t{Course Subject} as string,\n\t\tPeriods as string,\n\t\tStatus as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> sourceSectionCsv\nsourceSchoolsCsv derive(invalidSISID = isNull({SIS ID}) || length({SIS ID}) == 0,\n\t\tinvalidName = isNull(Name) || length({Name}) == 0) ~> schoolValidations\nConditionalSplit1@invalidSchoolRecords derive(type = \"school\",\n\t\terrors = concat(\r\n    iif(invalidSISID, 'Invalid SIS ID; ', ''), \r\n    iif(invalidName, 'Invalid Name; ', '')\r\n),\n\t\tsisId = {SIS ID}) ~> schoolErrors\nschoolValidations split(invalidSISID || invalidName,\n\tdisjoint: false) ~> ConditionalSplit1@(invalidSchoolRecords, validSchoolRecords)\nsourceStudentCsv derive(invalidSISID = isNull({SIS ID}) || length({SIS ID}) == 0,\n\t\tinvalidSchoolSISID = isNull({School SIS ID}) || length({School SIS ID}) == 0,\n\t\tinvalidUsername = isNull(Username) || length(Username) == 0,\n\t\tinvalidFirstName = isNull({First Name}) || length({First Name}) == 0,\n\t\tinvalidLastName = isNull({Last Name}) || length({Last Name}) == 0) ~> studentValidations\nstudentValidations split(invalidSISID || invalidSchoolSISID ||invalidUsername || invalidFirstName || invalidLastName,\n\tdisjoint: false) ~> ConditionalSplit8@(invalidStudentRecords, validStudentRecords)\nConditionalSplit8@invalidStudentRecords derive(type = \"student\",\n\t\terrors = concat(\r\n    iif(invalidSISID, 'Invalid SIS ID; ', ''), \r\n    iif(invalidSchoolSISID, 'Invalid School SIS ID; ', ''),\r\n    iif(invalidUsername, 'Invalid Username; ', ''),\r\n    iif(invalidFirstName, 'Invalid First Name; ', ''),\r\n    iif(invalidLastName, 'Invalid Last Name; ', '')\r\n),\n\t\tsisId = {SIS ID}) ~> studentErrors\nsourceTeacherCsv derive(invalidSISID = isNull({SIS ID}) || length({SIS ID}) == 0,\n\t\tinvalidSchoolSISID = isNull({School SIS ID}) || length({School SIS ID}) == 0,\n\t\tinvalidUsername = isNull(Username) || length(Username) == 0 || !regexMatch(Username, `^[A-za-z0-9.\\\\-_!#~^\\\\\\\\\\u0027]{1,64}$`),\n\t\tinvalidFirstName = isNull({First Name}) || length({First Name}) == 0,\n\t\tinvalidLastName = isNull({Last Name}) || length({Last Name}) == 0) ~> teacherValidations\nteacherValidations split(invalidSISID || invalidSchoolSISID || invalidUsername || invalidFirstName || invalidLastName,\n\tdisjoint: false) ~> ConditionalSplit2@(invalidTeacherRecords, validTeacherRecords)\nConditionalSplit2@invalidTeacherRecords derive(sisId = {SIS ID},\n\t\ttype = \"teacher\",\n\t\terrors = concat(\r\n    iif(invalidSISID, 'Invalid SIS ID; ', ''), \r\n    iif(invalidSchoolSISID, 'Invalid School SIS ID; ', ''),\r\n    iif(invalidUsername, 'Invalid Username; ', ''),\r\n    iif(invalidFirstName, 'Invalid First Name; ', ''),\r\n    iif(invalidLastName, 'Invalid Last Name; ', '')\r\n)) ~> teacherErrors\nsourceStudentEnrollmentCsv derive(invalidSISID = isNull({SIS ID}) || length({SIS ID}) == 0,\n\t\tinvalidSectionSISID = isNull({Section SIS ID}) || length({Section SIS ID}) == 0 || !regexMatch({Section SIS ID}, `^[a-zA-Z0-9_.\\u0027-]+$`)) ~> enrollmentValidations\nConditionalSplit4@invalidEnrollments derive(sisId = {SIS ID},\n\t\ttype = \"studentenrollment\",\n\t\terrors = concat(\r\n    iif(invalidSISID, 'Invalid SIS ID; ', ''), \r\n    iif(invalidSectionSISID, 'Invalid Section SIS ID; ', '')\r\n)) ~> enrollmentErrors\nsourceTeacherRosterCsv derive(invalidSISID = isNull({SIS ID}) || length({SIS ID}) == 0,\n\t\tinvalidSectionSISID = isNull({Section SIS ID}) || length({Section SIS ID}) == 0 || !regexMatch({Section SIS ID}, `^[a-zA-Z0-9_.\\u0027-]+$`)) ~> rosterValidations\nConditionalSplit3@invalidTeacherRosterRecords derive(sisId = {SIS ID},\n\t\ttype = \"teacherroster\",\n\t\terrors = concat(\r\n    iif(invalidSISID, 'Invalid SIS ID; ', ''), \r\n    iif(invalidSectionSISID, 'Invalid Section SIS ID; ', '')\r\n)) ~> teacherRosterErrors\nschoolErrors, studentErrors, teacherErrors, enrollmentErrors, teacherRosterErrors, sectionErrors union(byName: true)~> Union1\nUnion1 derive(date = currentUTC()) ~> addDate\nrosterValidations split(invalidSISID || invalidSectionSISID,\n\tdisjoint: false) ~> ConditionalSplit3@(invalidTeacherRosterRecords, validTeacherRosterRecords)\nenrollmentValidations split(invalidSISID || invalidSectionSISID,\n\tdisjoint: false) ~> ConditionalSplit4@(invalidEnrollments, validEnrollments)\nsourceSectionCsv derive(invalidSISID = isNull({SIS ID}) || length({SIS ID}) == 0,\n\t\tinvalidSchoolSISID = isNull({School SIS ID}) || length({School SIS ID}) == 0,\n\t\tinvalidSectionName = isNull({Section Name}) || length({Section Name}) == 0) ~> sectionValidations\nsectionValidations split(invalidSISID || invalidSchoolSISID || invalidSectionName,\n\tdisjoint: false) ~> ConditionalSplit9@(invalidSectionRecords, validSectionRecords)\nConditionalSplit9@invalidSectionRecords derive(sisId = {SIS ID},\n\t\ttype = \"section\",\n\t\terrors = concat(\r\n    iif(invalidSISID, 'Invalid SIS ID; ', ''), \r\n    iif(invalidSchoolSISID, 'Invalid Section SIS ID; ', ''),\r\n    iif(invalidSectionName, 'Invalid Section Name; ', '')\r\n)) ~> sectionErrors\nConditionalSplit9@validSectionRecords, ConditionalSplit1@validSchoolRecords join({School SIS ID} == ConditionalSplit1@validSchoolRecords@{SIS ID},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinSchool\nRenameSectionColumns, ConditionalSplit3@validTeacherRosterRecords join(RenameSectionColumns@{Section SIS ID} == ConditionalSplit3@validTeacherRosterRecords@{Section SIS ID},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinTeacherRoster\nRenameWithTeacherId, ConditionalSplit2@validTeacherRecords join({Teacher SIS ID} == {SIS ID},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinTeacher\nDedupSectionRecords, validEnrollmentsWithValidStudentsFinal join(DedupSectionRecords@{Section SIS ID} == validEnrollmentsWithValidStudentsFinal@{Section SIS ID},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinStudentEnrollments\nRenameWithTeacherUsername aggregate(groupBy({Section SIS ID}),\n\teach(match(!in(['Section SIS ID'],name)), $$ = first($$))) ~> DedupSectionRecords\nJoinTeacher select(mapColumn(\n\t\t{Section SIS ID},\n\t\t{School SIS ID} = RenameWithTeacherId@{School SIS ID},\n\t\t{Section Name},\n\t\t{Section Number},\n\t\t{Term SIS ID},\n\t\t{Term Name},\n\t\t{Term StartDate},\n\t\t{Term EndDate},\n\t\t{Course SIS ID},\n\t\t{Course Name},\n\t\t{Course Number},\n\t\t{Course Description},\n\t\t{Course Subject},\n\t\tPeriods,\n\t\tStatus = RenameWithTeacherId@Status,\n\t\t{Teacher SIS ID},\n\t\t{Teacher Username} = Username\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RenameWithTeacherUsername\nJoinSchool select(mapColumn(\n\t\t{Section SIS ID} = ConditionalSplit9@validSectionRecords@{SIS ID},\n\t\t{School SIS ID},\n\t\t{Section Name},\n\t\t{Section Number},\n\t\t{Term SIS ID},\n\t\t{Term Name},\n\t\t{Term StartDate},\n\t\t{Term EndDate},\n\t\t{Course SIS ID},\n\t\t{Course Name},\n\t\t{Course Number},\n\t\t{Course Description},\n\t\t{Course Subject},\n\t\tPeriods,\n\t\tStatus\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RenameSectionColumns\nJoinTeacherRoster select(mapColumn(\n\t\t{Section SIS ID} = RenameSectionColumns@{Section SIS ID},\n\t\t{School SIS ID},\n\t\t{Section Name},\n\t\t{Section Number},\n\t\t{Term SIS ID},\n\t\t{Term Name},\n\t\t{Term StartDate},\n\t\t{Term EndDate},\n\t\t{Course SIS ID},\n\t\t{Course Name},\n\t\t{Course Number},\n\t\t{Course Description},\n\t\t{Course Subject},\n\t\tPeriods,\n\t\tStatus,\n\t\t{Teacher SIS ID} = {SIS ID}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RenameWithTeacherId\nConditionalSplit4@validEnrollments, ConditionalSplit8@validStudentRecords join(ConditionalSplit4@validEnrollments@{SIS ID} == ConditionalSplit8@validStudentRecords@{SIS ID},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> validEnrollmentsWithValidStudents\nvalidEnrollmentsWithValidStudents select(mapColumn(\n\t\t{Section SIS ID},\n\t\t{Student SIS ID} = ConditionalSplit8@validStudentRecords@{SIS ID}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> validEnrollmentsWithValidStudentsFinal\naddDate sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tdate as string,\n\t\tschoolId as string,\n\t\ttype as string,\n\t\tsisId as string,\n\t\terrors as string\n\t),\n\tpartitionFileNames:['validation.log'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tmapColumn(\n\t\tdate,\n\t\ttype,\n\t\terrors,\n\t\tsisId\n\t),\n\tpartitionBy('hash', 1)) ~> sinkValidationErrorsCsv\nDedupSectionRecords sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{Section Name} as string,\n\t\t{Section Number} as string,\n\t\t{Term SIS ID} as string,\n\t\t{Term Name} as string,\n\t\t{Term StartDate} as string,\n\t\t{Term EndDate} as string,\n\t\t{Course SIS ID} as string,\n\t\t{Course Name} as string,\n\t\t{Course Number} as string,\n\t\t{Course Description} as string,\n\t\t{Course Subject} as string,\n\t\tPeriods as string,\n\t\tStatus as string\n\t),\n\tpartitionFileNames:['section.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID} = {Section SIS ID},\n\t\t{School SIS ID},\n\t\t{Section Name},\n\t\t{Section Number},\n\t\t{Term SIS ID},\n\t\t{Term Name},\n\t\t{Term StartDate},\n\t\t{Term EndDate},\n\t\t{Course SIS ID},\n\t\t{Course Name},\n\t\t{Course Number},\n\t\t{Course Description},\n\t\t{Course Subject},\n\t\tPeriods,\n\t\tStatus\n\t),\n\tpartitionBy('hash', 1)) ~> sinkValidatedSectionCsv\nConditionalSplit1@validSchoolRecords sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\tName as string,\n\t\t{School Number} as string,\n\t\t{School NCES_ID} as string,\n\t\t{State ID} as string,\n\t\t{Grade Low} as string,\n\t\t{Grade High} as string,\n\t\t{Principal SIS ID} as string,\n\t\t{Principal Name} as string,\n\t\t{Principal Secondary Email} as string,\n\t\tAddress as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tCountry as string,\n\t\tZip as string,\n\t\tPhone as string,\n\t\tZone as string\n\t),\n\tpartitionFileNames:['school.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\tName,\n\t\t{School Number},\n\t\t{School NCES_ID},\n\t\t{State ID},\n\t\t{Grade Low},\n\t\t{Grade High},\n\t\t{Principal SIS ID},\n\t\t{Principal Name},\n\t\t{Principal Secondary Email},\n\t\tAddress,\n\t\tCity,\n\t\tState,\n\t\tCountry,\n\t\tZip,\n\t\tPhone,\n\t\tZone\n\t),\n\tpartitionBy('hash', 1)) ~> sinkValidatedSchoolCsv\nConditionalSplit8@validStudentRecords sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Secondary Email} as string,\n\t\t{Student Number} as string,\n\t\t{Middle Name} as string,\n\t\tGrade as string,\n\t\tStatus as string,\n\t\tBirthdate as string,\n\t\t{Graduation Year} as string\n\t),\n\tpartitionFileNames:['student.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{First Name},\n\t\t{Last Name},\n\t\tUsername,\n\t\tPassword,\n\t\t{State ID},\n\t\t{Secondary Email},\n\t\t{Student Number},\n\t\t{Middle Name},\n\t\tGrade,\n\t\tStatus,\n\t\tBirthdate,\n\t\t{Graduation Year}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkValidatedStudentCsv\nConditionalSplit2@validTeacherRecords sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Teacher Number} as string,\n\t\tStatus as string,\n\t\t{Middle Name} as string,\n\t\t{Secondary Email} as string,\n\t\tTitle as string,\n\t\tQualification as string\n\t),\n\tpartitionFileNames:['teacher.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{First Name},\n\t\t{Last Name},\n\t\tUsername,\n\t\tPassword,\n\t\t{State ID},\n\t\t{Teacher Number},\n\t\tStatus,\n\t\t{Middle Name},\n\t\t{Secondary Email},\n\t\tTitle,\n\t\tQualification\n\t),\n\tpartitionBy('hash', 1)) ~> sinkValidatedTeacherCsv\nRenameWithTeacherUsername sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tpartitionFileNames:['teacherroster.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID} = {Teacher SIS ID},\n\t\t{Section SIS ID}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkValidatedTeacherRosterCsv\nJoinStudentEnrollments sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tpartitionFileNames:['studentenrollment.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{Section SIS ID} = DedupSectionRecords@{Section SIS ID},\n\t\t{SIS ID} = {Student SIS ID}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkValidatedStudentEnrollmentsCsv\nConditionalSplit1@invalidSchoolRecords sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\tName as string,\n\t\t{School Number} as string,\n\t\t{School NCES_ID} as string,\n\t\t{State ID} as string,\n\t\t{Grade Low} as string,\n\t\t{Grade High} as string,\n\t\t{Principal SIS ID} as string,\n\t\t{Principal Name} as string,\n\t\t{Principal Secondary Email} as string,\n\t\tAddress as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tCountry as string,\n\t\tZip as string,\n\t\tPhone as string,\n\t\tZone as string\n\t),\n\tpartitionFileNames:['invalid_school_records.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\tName,\n\t\t{School Number},\n\t\t{School NCES_ID},\n\t\t{State ID},\n\t\t{Grade Low},\n\t\t{Grade High},\n\t\t{Principal SIS ID},\n\t\t{Principal Name},\n\t\t{Principal Secondary Email},\n\t\tAddress,\n\t\tCity,\n\t\tState,\n\t\tCountry,\n\t\tZip,\n\t\tPhone,\n\t\tZone\n\t),\n\tpartitionBy('hash', 1)) ~> sinkInvalidSchoolCsv\nConditionalSplit8@invalidStudentRecords sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Secondary Email} as string,\n\t\t{Student Number} as string,\n\t\t{Middle Name} as string,\n\t\tGrade as string,\n\t\tStatus as string,\n\t\tBirthdate as string,\n\t\t{Graduation Year} as string\n\t),\n\tpartitionFileNames:['invalid_student_records.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{First Name},\n\t\t{Last Name},\n\t\tUsername,\n\t\tPassword,\n\t\t{State ID},\n\t\t{Secondary Email},\n\t\t{Student Number},\n\t\t{Middle Name},\n\t\tGrade,\n\t\tStatus,\n\t\tBirthdate,\n\t\t{Graduation Year}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkInvalidStudentCsv\nConditionalSplit2@invalidTeacherRecords sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Teacher Number} as string,\n\t\tStatus as string,\n\t\t{Middle Name} as string,\n\t\t{Secondary Email} as string,\n\t\tTitle as string,\n\t\tQualification as string\n\t),\n\tpartitionFileNames:['invalid_teacher_records.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{First Name},\n\t\t{Last Name},\n\t\tUsername,\n\t\tPassword,\n\t\t{State ID},\n\t\t{Teacher Number},\n\t\tStatus,\n\t\t{Middle Name},\n\t\t{Secondary Email},\n\t\tTitle,\n\t\tQualification\n\t),\n\tpartitionBy('hash', 1)) ~> sinkInvalidTeacherCsv\nConditionalSplit4@invalidEnrollments sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tpartitionFileNames:['invalid_studentenrollment_records.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{Section SIS ID},\n\t\t{SIS ID}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkInvalidEnrollments\nConditionalSplit3@invalidTeacherRosterRecords sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tpartitionFileNames:['invalid_teacherroster_records.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{Section SIS ID},\n\t\t{SIS ID}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkInvalidTeacherRosterCsv\nConditionalSplit9@invalidSectionRecords sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{Section Name} as string,\n\t\t{Section Number} as string,\n\t\t{Term SIS ID} as string,\n\t\t{Term Name} as string,\n\t\t{Term StartDate} as string,\n\t\t{Term EndDate} as string,\n\t\t{Course SIS ID} as string,\n\t\t{Course Name} as string,\n\t\t{Course Number} as string,\n\t\t{Course Description} as string,\n\t\t{Course Subject} as string,\n\t\tPeriods as string,\n\t\tStatus as string\n\t),\n\tpartitionFileNames:['invalid_section_records.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{Section Name},\n\t\t{Section Number},\n\t\t{Term SIS ID},\n\t\t{Term Name},\n\t\t{Term StartDate},\n\t\t{Term EndDate},\n\t\t{Course SIS ID},\n\t\t{Course Name},\n\t\t{Course Number},\n\t\t{Course Description},\n\t\t{Course Subject},\n\t\tPeriods,\n\t\tStatus\n\t),\n\tpartitionBy('hash', 1)) ~> sinkInvalidSectionCsv"
+		}
+	}
+}

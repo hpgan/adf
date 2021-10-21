@@ -1,0 +1,273 @@
+{
+	"name": "Get_data_and_split_to_profiles",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy_into_inbound",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"wildcardFolderPath": {
+								"value": "@pipeline().parameters.sourceDirectory",
+								"type": "Expression"
+							},
+							"wildcardFileName": "*.csv"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "CsvFile",
+						"type": "DatasetReference",
+						"parameters": {
+							"directory": "na"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CsvFile",
+						"type": "DatasetReference",
+						"parameters": {
+							"directory": {
+								"value": "@{pipeline().parameters.directory}/inbound",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "split_into_profiles",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "copy_into_inbound",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "split_into_profiles",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"sourceSchoolsCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/inbound/school.csv",
+									"type": "Expression"
+								}
+							},
+							"sourceStudentCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/inbound/student.csv",
+									"type": "Expression"
+								}
+							},
+							"sourceTeacherCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/inbound/teacher.csv",
+									"type": "Expression"
+								}
+							},
+							"sourceStudentEnrollmentCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/inbound/studentenrollment.csv",
+									"type": "Expression"
+								}
+							},
+							"sourceTeacherRosterCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/inbound/teacherroster.csv",
+									"type": "Expression"
+								}
+							},
+							"sourceSectionCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/inbound/section.csv",
+									"type": "Expression"
+								}
+							},
+							"sinkSchoolCsvProfile1": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/profile1",
+									"type": "Expression"
+								}
+							},
+							"sinkSchoolCsvProfile2": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/profile2",
+									"type": "Expression"
+								}
+							},
+							"sinkSchoolCsvRemainder": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/remainder",
+									"type": "Expression"
+								}
+							},
+							"sinkStudentCsvProfile1": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/profile1",
+									"type": "Expression"
+								}
+							},
+							"sinkStudentCsvProfile2": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/profile2",
+									"type": "Expression"
+								}
+							},
+							"sinkStudentCsvRemainder": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/remainder",
+									"type": "Expression"
+								}
+							},
+							"sinkTeacherCsvProfile1": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/profile1",
+									"type": "Expression"
+								}
+							},
+							"sinkTeacherCsvProfile2": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/profile2",
+									"type": "Expression"
+								}
+							},
+							"sinkTeacherCsvRemainder": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/remainder",
+									"type": "Expression"
+								}
+							},
+							"sinkStudentEnrollmentCsvProfile1": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/profile1",
+									"type": "Expression"
+								}
+							},
+							"sinkStudentEnrollmentCsvProfile2": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/profile2",
+									"type": "Expression"
+								}
+							},
+							"sinkStudentEnrollmentCsvRemainder": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/remainder",
+									"type": "Expression"
+								}
+							},
+							"sinkTeacherRosterCsvProfile1": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/profile1",
+									"type": "Expression"
+								}
+							},
+							"sinkTeacherRosterCsvProfile2": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/profile2",
+									"type": "Expression"
+								}
+							},
+							"sinkTeacherRosterCsvRemainder": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/remainder",
+									"type": "Expression"
+								}
+							},
+							"sinkSectionCsvProfile1": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/profile1",
+									"type": "Expression"
+								}
+							},
+							"sinkSectionCsvProfile2": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/profile2",
+									"type": "Expression"
+								}
+							},
+							"sinkSectionCsvRemainder": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/remainder",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"parameters": {
+			"directory": {
+				"type": "string"
+			},
+			"sourceDirectory": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"execTime": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Sub pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-09-18T16:47:45Z"
+	}
+}

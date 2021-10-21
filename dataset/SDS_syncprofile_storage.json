@@ -1,0 +1,35 @@
+{
+	"name": "SDS_syncprofile_storage",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLD",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"sasUriParam": {
+				"type": "string"
+			},
+			"sdsProfileId": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "SchoolDataSync"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": {
+					"value": "@dataset().sdsProfileId",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

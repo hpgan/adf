@@ -1,0 +1,653 @@
+{
+	"name": "Validate_then_Upload",
+	"properties": {
+		"activities": [
+			{
+				"name": "validate_SDS_CSVs",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "validate_SDS_CSVs",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"sourceSchoolsCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/school.csv",
+									"type": "Expression"
+								}
+							},
+							"sourceStudentCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/student.csv",
+									"type": "Expression"
+								}
+							},
+							"sourceTeacherCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/teacher.csv",
+									"type": "Expression"
+								}
+							},
+							"sourceStudentEnrollmentCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/studentenrollment.csv",
+									"type": "Expression"
+								}
+							},
+							"sourceTeacherRosterCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/teacherroster.csv",
+									"type": "Expression"
+								}
+							},
+							"sourceSectionCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/section.csv",
+									"type": "Expression"
+								}
+							},
+							"sinkValidationErrorsCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}",
+									"type": "Expression"
+								}
+							},
+							"sinkValidatedSectionCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/validated",
+									"type": "Expression"
+								}
+							},
+							"sinkValidatedSchoolCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/validated",
+									"type": "Expression"
+								}
+							},
+							"sinkValidatedStudentCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/validated",
+									"type": "Expression"
+								}
+							},
+							"sinkValidatedTeacherCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/validated",
+									"type": "Expression"
+								}
+							},
+							"sinkValidatedTeacherRosterCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/validated",
+									"type": "Expression"
+								}
+							},
+							"sinkValidatedStudentEnrollmentsCsv": {
+								"directory": {
+									"value": "@{pipeline().parameters.directory}/validated",
+									"type": "Expression"
+								}
+							},
+							"sinkInvalidSchoolCsv": {
+								"directory": "@{pipeline().parameters.directory}/invalid"
+							},
+							"sinkInvalidStudentCsv": {
+								"directory": "@{pipeline().parameters.directory}/invalid"
+							},
+							"sinkInvalidTeacherCsv": {
+								"directory": "@{pipeline().parameters.directory}/invalid"
+							},
+							"sinkInvalidEnrollments": {
+								"directory": "@{pipeline().parameters.directory}/invalid"
+							},
+							"sinkInvalidTeacherRosterCsv": {
+								"directory": "@{pipeline().parameters.directory}/invalid"
+							},
+							"sinkInvalidSectionCsv": {
+								"directory": "@{pipeline().parameters.directory}/invalid"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "check_validation_errors",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "validate_SDS_CSVs",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"wildcardFolderPath": {
+								"value": "@pipeline().parameters.directory",
+								"type": "Expression"
+							},
+							"wildcardFileName": "validation.log"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "CsvFile",
+						"type": "DatasetReference",
+						"parameters": {
+							"directory": "na"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "upload_if_validation_succeeds",
+				"description": "Checks the number of errors against the configured validation error threshold (note that 1 is subtracted to account for the header in the validation.log)",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "check_validation_errors",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "set_record_count_array",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@and(\nless(sub(int(activity('check_validation_errors').output.count),1), pipeline().globalParameters.validationErrorThreshold),\nor(not(pipeline().globalParameters.checkForEmptyFilesBeforeSending), not(contains(variables('recordCountArray'), 1)))\n)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Send_validation_errors_email_report",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send_email_report",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"subject": {
+										"value": "ADF: SDS upload validation failed for @{pipeline().parameters.directory}",
+										"type": "Expression"
+									},
+									"body": {
+										"value": "The validation failed for @{pipeline().parameters.directory}\\n\nThis profile data was not sent to SDS because of the failed validation check.\\n\\n\nRecord counts:\\n\nschool.csv - @{variables('recordCountArray')[0]}\\n\nsection.csv - @{variables('recordCountArray')[1]}\\n\nstudent.csv - @{variables('recordCountArray')[2]}\\n\nstudentenrollment.csv - @{variables('recordCountArray')[3]}\\n\nteacher.csv - @{variables('recordCountArray')[4]}\\n\nteacherroster.csv - @{variables('recordCountArray')[5]}\\n\\n\nValidation error count: @{activity('check_validation_errors').output.count}\\n\\n\nSee ADF run log for additional details.\\n\\n\n[Note that the record counts in this message have a max value of 5000 (or 4999 plus the header record), so treat a count of 5000 (or 4999) to signify a record count that is some value greater than 5000.]\n",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Upload_to_SDS",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Upload_to_SDS",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"directory": {
+										"value": "@{pipeline().parameters.directory}/validated",
+										"type": "Expression"
+									},
+									"sdsProfileId": {
+										"value": "@pipeline().parameters.sdsProfileId",
+										"type": "Expression"
+									}
+								}
+							}
+						},
+						{
+							"name": "Send_email_report",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "Upload_to_SDS",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send_email_report",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"subject": {
+										"value": "ADF: successful SDS upload for @{pipeline().parameters.directory}",
+										"type": "Expression"
+									},
+									"body": {
+										"value": "ADF upload to SDS for @{pipeline().parameters.directory} sent successfully.\\n\nCheck sds.microsoft.com for updates on the status of the sync.\\n\\n\nRecord counts for sent files:\\n\nschool.csv - @{variables('recordCountArray')[0]}\\n\nsection.csv - @{variables('recordCountArray')[1]}\\n\nstudent.csv - @{variables('recordCountArray')[2]}\\n\nstudentenrollment.csv - @{variables('recordCountArray')[3]}\\n\nteacher.csv - @{variables('recordCountArray')[4]}\\n\nteacherroster.csv - @{variables('recordCountArray')[5]}\\n\\n\nValidation error count: @{activity('check_validation_errors').output.count}\\n\\n\nSee ADF run log for additional details.\\n\\n\n[Note that the record counts in this message have a max value of 5000 (or 4999 plus the header record), so treat a count of 5000 (or 4999) to signify a record count that is some value greater than 5000.]",
+										"type": "Expression"
+									}
+								}
+							}
+						},
+						{
+							"name": "Send_email_report1",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "Upload_to_SDS",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send_email_report",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"subject": {
+										"value": "ADF: failed SDS upload for @{pipeline().parameters.directory}",
+										"type": "Expression"
+									},
+									"body": {
+										"value": "ADF: failed SDS upload for @{pipeline().parameters.directory}\\n\nThis may have been caused by an invalid profile id.\\n\nSee ADF run logs for more details.\\n\n\nRecord counts for files:\\n\nschool.csv - @{variables('recordCountArray')[0]}\\n\nsection.csv - @{variables('recordCountArray')[1]}\\n\nstudent.csv - @{variables('recordCountArray')[2]}\\n\nstudentenrollment.csv - @{variables('recordCountArray')[3]}\\n\nteacher.csv - @{variables('recordCountArray')[4]}\\n\nteacherroster.csv - @{variables('recordCountArray')[5]}\\n\\n\nValidation error count: @{activity('check_validation_errors').output.count}\\n\\n\nSee ADF run log for additional details.\\n\\n\n[Note that the record counts in this message have a max value of 5000 (or 4999 plus the header record), so treat a count of 5000 (or 4999) to signify a record count that is some value greater than 5000.]",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "check_school_csv",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "validate_SDS_CSVs",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"wildcardFolderPath": {
+								"value": "@{pipeline().parameters.directory}/validated",
+								"type": "Expression"
+							},
+							"wildcardFileName": "school.csv"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "CsvFile",
+						"type": "DatasetReference",
+						"parameters": {
+							"directory": "na"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "check_section_csv",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "validate_SDS_CSVs",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"wildcardFolderPath": {
+								"value": "@{pipeline().parameters.directory}/validated",
+								"type": "Expression"
+							},
+							"wildcardFileName": "section.csv"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "CsvFile",
+						"type": "DatasetReference",
+						"parameters": {
+							"directory": "na"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "check_student_csv",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "validate_SDS_CSVs",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"wildcardFolderPath": {
+								"value": "@{pipeline().parameters.directory}/validated",
+								"type": "Expression"
+							},
+							"wildcardFileName": "student.csv"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "CsvFile",
+						"type": "DatasetReference",
+						"parameters": {
+							"directory": "na"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "check_studentenrollment_csv",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "validate_SDS_CSVs",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"wildcardFolderPath": {
+								"value": "@{pipeline().parameters.directory}/validated",
+								"type": "Expression"
+							},
+							"wildcardFileName": "studentenrollment.csv"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "CsvFile",
+						"type": "DatasetReference",
+						"parameters": {
+							"directory": "na"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "check_teacher_csv",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "validate_SDS_CSVs",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"wildcardFolderPath": {
+								"value": "@{pipeline().parameters.directory}/validated",
+								"type": "Expression"
+							},
+							"wildcardFileName": "teacher.csv"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "CsvFile",
+						"type": "DatasetReference",
+						"parameters": {
+							"directory": "na"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "check_teacherroster_csv",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "validate_SDS_CSVs",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"wildcardFolderPath": {
+								"value": "@{pipeline().parameters.directory}/validated",
+								"type": "Expression"
+							},
+							"wildcardFileName": "teacherroster.csv"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "CsvFile",
+						"type": "DatasetReference",
+						"parameters": {
+							"directory": "na"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "set_record_count_array",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "check_school_csv",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "check_section_csv",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "check_student_csv",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "check_studentenrollment_csv",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "check_teacher_csv",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "check_teacherroster_csv",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "recordCountArray",
+					"value": {
+						"value": "@createArray(\nsub(activity('check_school_csv').output.count,1),\nsub(activity('check_section_csv').output.count,1),\nsub(activity('check_student_csv').output.count,1),\nsub(activity('check_studentenrollment_csv').output.count,1),\nsub(activity('check_teacher_csv').output.count,1),\nsub(activity('check_teacherroster_csv').output.count,1)\n)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"directory": {
+				"type": "string"
+			},
+			"sdsProfileId": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"SASUrlParts": {
+				"type": "Array",
+				"defaultValue": []
+			},
+			"recordCountArray": {
+				"type": "Array",
+				"defaultValue": []
+			}
+		},
+		"folder": {
+			"name": "Sub pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-09-24T12:32:23Z"
+	}
+}

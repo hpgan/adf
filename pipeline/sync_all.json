@@ -1,0 +1,153 @@
+{
+	"name": "sync_all",
+	"properties": {
+		"activities": [
+			{
+				"name": "get_current_time",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "execTime",
+					"value": {
+						"value": "@{formatDateTime(convertTimeZone(utcnow(), 'UTC', 'Eastern Standard Time'), 'yyyy-MM-ddTHHmm_ss')}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Validate_then_upload_profile1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Get_data_and_split_to_profiles",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Validate_then_Upload",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"directory": {
+							"value": "@{variables('execTime')}/profile1",
+							"type": "Expression"
+						},
+						"sdsProfileId": {
+							"value": "@pipeline().globalParameters.profileId_1",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Validate_then_upload_profile2",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Get_data_and_split_to_profiles",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Validate_then_Upload",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"directory": {
+							"value": "@{variables('execTime')}/profile2",
+							"type": "Expression"
+						},
+						"sdsProfileId": {
+							"value": "@pipeline().globalParameters.profileId_2",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Get_data_and_split_to_profiles",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "get_current_time",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Get_data_and_split_to_profiles",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"directory": {
+							"value": "@{variables('execTime')}",
+							"type": "Expression"
+						},
+						"sourceDirectory": {
+							"value": "@pipeline().parameters.sourceDirectory",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Validate_then_upload_remainder",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Get_data_and_split_to_profiles",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Validate_then_Upload",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"directory": {
+							"value": "@{variables('execTime')}/remainder",
+							"type": "Expression"
+						},
+						"sdsProfileId": {
+							"value": "@pipeline().globalParameters.profileId_3",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"sourceDirectory": {
+				"type": "string",
+				"defaultValue": "source"
+			}
+		},
+		"variables": {
+			"execTime": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-09-22T19:55:38Z"
+	}
+}

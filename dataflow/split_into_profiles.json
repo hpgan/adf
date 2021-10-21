@@ -1,0 +1,208 @@
+{
+	"name": "split_into_profiles",
+	"properties": {
+		"description": "Splits the incoming set of SDS formatted csv files into 3 separate sets, and writes out the resulting sets of csv files to folders called profile1, profile2, and profile3",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SDS_School_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceSchoolsCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Student_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceStudentCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Teacher_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceTeacherCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_StudentEnrollment_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceStudentEnrollmentCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_TeacherRoster_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceTeacherRosterCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Section_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceSectionCsv"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SDS_School_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkSchoolCsvProfile1"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_School_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkSchoolCsvProfile2"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_School_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkSchoolCsvRemainder"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Student_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkStudentCsvProfile1"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Student_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkStudentCsvProfile2"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Student_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkStudentCsvRemainder"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Teacher_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkTeacherCsvProfile1"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Teacher_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkTeacherCsvProfile2"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Teacher_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkTeacherCsvRemainder"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_StudentEnrollment_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkStudentEnrollmentCsvProfile1"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_StudentEnrollment_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkStudentEnrollmentCsvProfile2"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_StudentEnrollment_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkStudentEnrollmentCsvRemainder"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_TeacherRoster_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkTeacherRosterCsvProfile1"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_TeacherRoster_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkTeacherRosterCsvProfile2"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_TeacherRoster_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkTeacherRosterCsvRemainder"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Section_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkSectionCsvProfile1"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Section_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkSectionCsvProfile2"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDS_Section_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkSectionCsvRemainder"
+				}
+			],
+			"transformations": [
+				{
+					"name": "splitSchools"
+				},
+				{
+					"name": "splitStudents"
+				},
+				{
+					"name": "splitTeachers"
+				},
+				{
+					"name": "Join1"
+				},
+				{
+					"name": "splitEnrollments"
+				},
+				{
+					"name": "Join2"
+				},
+				{
+					"name": "splitTeacherroster"
+				},
+				{
+					"name": "splitSections"
+				}
+			],
+			"script": "source(output(\n\t\t{SIS ID} as string,\n\t\tName as string,\n\t\t{School Number} as string,\n\t\t{School NCES_ID} as string,\n\t\t{State ID} as string,\n\t\t{Grade Low} as string,\n\t\t{Grade High} as string,\n\t\t{Principal SIS ID} as string,\n\t\t{Principal Name} as string,\n\t\t{Principal Secondary Email} as string,\n\t\tAddress as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tCountry as string,\n\t\tZip as string,\n\t\tPhone as string,\n\t\tZone as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> sourceSchoolsCsv\nsource(output(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Secondary Email} as string,\n\t\t{Student Number} as string,\n\t\t{Middle Name} as string,\n\t\tGrade as string,\n\t\tStatus as string,\n\t\tBirthdate as string,\n\t\t{Graduation Year} as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> sourceStudentCsv\nsource(output(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Teacher Number} as string,\n\t\tStatus as string,\n\t\t{Middle Name} as string,\n\t\t{Secondary Email} as string,\n\t\tTitle as string,\n\t\tQualification as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> sourceTeacherCsv\nsource(output(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> sourceStudentEnrollmentCsv\nsource(output(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> sourceTeacherRosterCsv\nsource(output(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{Section Name} as string,\n\t\t{Section Number} as string,\n\t\t{Term SIS ID} as string,\n\t\t{Term Name} as string,\n\t\t{Term StartDate} as string,\n\t\t{Term EndDate} as string,\n\t\t{Course SIS ID} as string,\n\t\t{Course Name} as string,\n\t\t{Course Number} as string,\n\t\t{Course Description} as string,\n\t\t{Course Subject} as string,\n\t\tPeriods as string,\n\t\tStatus as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> sourceSectionCsv\nsourceSchoolsCsv split({SIS ID} == 'sch1' || {SIS ID} == 'sch2',\n\t{SIS ID} == 'sch3',\n\tdisjoint: false) ~> splitSchools@(profile1, profile2, remainder)\nsourceStudentCsv split({School SIS ID} == 'sch1' || {School SIS ID} == 'sch2',\n\t{School SIS ID} == 'sch3',\n\tdisjoint: false) ~> splitStudents@(profile1, profile2, remainder)\nsourceTeacherCsv split({School SIS ID} == 'sch1' || {School SIS ID} == 'sch2',\n\t{School SIS ID} == 'sch3',\n\tdisjoint: false) ~> splitTeachers@(profile1, profile2, remainder)\nsourceStudentEnrollmentCsv, sourceSectionCsv join({Section SIS ID} == sourceSectionCsv@{SIS ID},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1 split({School SIS ID} == 'sch1' || {School SIS ID} == 'sch2',\n\t{School SIS ID} == 'sch3',\n\tdisjoint: false) ~> splitEnrollments@(profile1, profile2, remainder)\nsourceTeacherRosterCsv, sourceSectionCsv join({Section SIS ID} == sourceSectionCsv@{SIS ID},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join2\nJoin2 split({School SIS ID} == 'sch1' || {School SIS ID} == 'sch2',\n\t{School SIS ID} == 'sch3',\n\tdisjoint: false) ~> splitTeacherroster@(profile1, profile2, remainder)\nsourceSectionCsv split({School SIS ID} == 'sch1' || {School SIS ID} == 'sch2',\n\t{School SIS ID} == 'sch3',\n\tdisjoint: false) ~> splitSections@(profile1, profile2, remainder)\nsplitSchools@profile1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\tName as string,\n\t\t{School Number} as string,\n\t\t{School NCES_ID} as string,\n\t\t{State ID} as string,\n\t\t{Grade Low} as string,\n\t\t{Grade High} as string,\n\t\t{Principal SIS ID} as string,\n\t\t{Principal Name} as string,\n\t\t{Principal Secondary Email} as string,\n\t\tAddress as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tCountry as string,\n\t\tZip as string,\n\t\tPhone as string,\n\t\tZone as string\n\t),\n\tpartitionFileNames:['school.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\tName,\n\t\t{School Number},\n\t\t{School NCES_ID},\n\t\t{State ID},\n\t\t{Grade Low},\n\t\t{Grade High},\n\t\t{Principal SIS ID},\n\t\t{Principal Name},\n\t\t{Principal Secondary Email},\n\t\tAddress,\n\t\tCity,\n\t\tState,\n\t\tCountry,\n\t\tZip,\n\t\tPhone,\n\t\tZone\n\t),\n\tpartitionBy('hash', 1)) ~> sinkSchoolCsvProfile1\nsplitSchools@profile2 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\tName as string,\n\t\t{School Number} as string,\n\t\t{School NCES_ID} as string,\n\t\t{State ID} as string,\n\t\t{Grade Low} as string,\n\t\t{Grade High} as string,\n\t\t{Principal SIS ID} as string,\n\t\t{Principal Name} as string,\n\t\t{Principal Secondary Email} as string,\n\t\tAddress as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tCountry as string,\n\t\tZip as string,\n\t\tPhone as string,\n\t\tZone as string\n\t),\n\tpartitionFileNames:['school.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\tName,\n\t\t{School Number},\n\t\t{School NCES_ID},\n\t\t{State ID},\n\t\t{Grade Low},\n\t\t{Grade High},\n\t\t{Principal SIS ID},\n\t\t{Principal Name},\n\t\t{Principal Secondary Email},\n\t\tAddress,\n\t\tCity,\n\t\tState,\n\t\tCountry,\n\t\tZip,\n\t\tPhone,\n\t\tZone\n\t),\n\tpartitionBy('hash', 1)) ~> sinkSchoolCsvProfile2\nsplitSchools@remainder sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\tName as string,\n\t\t{School Number} as string,\n\t\t{School NCES_ID} as string,\n\t\t{State ID} as string,\n\t\t{Grade Low} as string,\n\t\t{Grade High} as string,\n\t\t{Principal SIS ID} as string,\n\t\t{Principal Name} as string,\n\t\t{Principal Secondary Email} as string,\n\t\tAddress as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tCountry as string,\n\t\tZip as string,\n\t\tPhone as string,\n\t\tZone as string\n\t),\n\tpartitionFileNames:['school.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\tName,\n\t\t{School Number},\n\t\t{School NCES_ID},\n\t\t{State ID},\n\t\t{Grade Low},\n\t\t{Grade High},\n\t\t{Principal SIS ID},\n\t\t{Principal Name},\n\t\t{Principal Secondary Email},\n\t\tAddress,\n\t\tCity,\n\t\tState,\n\t\tCountry,\n\t\tZip,\n\t\tPhone,\n\t\tZone\n\t),\n\tpartitionBy('hash', 1)) ~> sinkSchoolCsvRemainder\nsplitStudents@profile1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Secondary Email} as string,\n\t\t{Student Number} as string,\n\t\t{Middle Name} as string,\n\t\tGrade as string,\n\t\tStatus as string,\n\t\tBirthdate as string,\n\t\t{Graduation Year} as string\n\t),\n\tpartitionFileNames:['student.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{First Name},\n\t\t{Last Name},\n\t\tUsername,\n\t\tPassword,\n\t\t{State ID},\n\t\t{Secondary Email},\n\t\t{Student Number},\n\t\t{Middle Name},\n\t\tGrade,\n\t\tStatus,\n\t\tBirthdate,\n\t\t{Graduation Year}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkStudentCsvProfile1\nsplitStudents@profile2 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Secondary Email} as string,\n\t\t{Student Number} as string,\n\t\t{Middle Name} as string,\n\t\tGrade as string,\n\t\tStatus as string,\n\t\tBirthdate as string,\n\t\t{Graduation Year} as string\n\t),\n\tpartitionFileNames:['student.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{First Name},\n\t\t{Last Name},\n\t\tUsername,\n\t\tPassword,\n\t\t{State ID},\n\t\t{Secondary Email},\n\t\t{Student Number},\n\t\t{Middle Name},\n\t\tGrade,\n\t\tStatus,\n\t\tBirthdate,\n\t\t{Graduation Year}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkStudentCsvProfile2\nsplitStudents@remainder sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Secondary Email} as string,\n\t\t{Student Number} as string,\n\t\t{Middle Name} as string,\n\t\tGrade as string,\n\t\tStatus as string,\n\t\tBirthdate as string,\n\t\t{Graduation Year} as string\n\t),\n\tpartitionFileNames:['student.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{First Name},\n\t\t{Last Name},\n\t\tUsername,\n\t\tPassword,\n\t\t{State ID},\n\t\t{Secondary Email},\n\t\t{Student Number},\n\t\t{Middle Name},\n\t\tGrade,\n\t\tStatus,\n\t\tBirthdate,\n\t\t{Graduation Year}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkStudentCsvRemainder\nsplitTeachers@profile1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Teacher Number} as string,\n\t\tStatus as string,\n\t\t{Middle Name} as string,\n\t\t{Secondary Email} as string,\n\t\tTitle as string,\n\t\tQualification as string\n\t),\n\tpartitionFileNames:['teacher.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{First Name},\n\t\t{Last Name},\n\t\tUsername,\n\t\tPassword,\n\t\t{State ID},\n\t\t{Teacher Number},\n\t\tStatus,\n\t\t{Middle Name},\n\t\t{Secondary Email},\n\t\tTitle,\n\t\tQualification\n\t),\n\tpartitionBy('hash', 1)) ~> sinkTeacherCsvProfile1\nsplitTeachers@profile2 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Teacher Number} as string,\n\t\tStatus as string,\n\t\t{Middle Name} as string,\n\t\t{Secondary Email} as string,\n\t\tTitle as string,\n\t\tQualification as string\n\t),\n\tpartitionFileNames:['teacher.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{First Name},\n\t\t{Last Name},\n\t\tUsername,\n\t\tPassword,\n\t\t{State ID},\n\t\t{Teacher Number},\n\t\tStatus,\n\t\t{Middle Name},\n\t\t{Secondary Email},\n\t\tTitle,\n\t\tQualification\n\t),\n\tpartitionBy('hash', 1)) ~> sinkTeacherCsvProfile2\nsplitTeachers@remainder sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{First Name} as string,\n\t\t{Last Name} as string,\n\t\tUsername as string,\n\t\tPassword as string,\n\t\t{State ID} as string,\n\t\t{Teacher Number} as string,\n\t\tStatus as string,\n\t\t{Middle Name} as string,\n\t\t{Secondary Email} as string,\n\t\tTitle as string,\n\t\tQualification as string\n\t),\n\tpartitionFileNames:['teacher.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{First Name},\n\t\t{Last Name},\n\t\tUsername,\n\t\tPassword,\n\t\t{State ID},\n\t\t{Teacher Number},\n\t\tStatus,\n\t\t{Middle Name},\n\t\t{Secondary Email},\n\t\tTitle,\n\t\tQualification\n\t),\n\tpartitionBy('hash', 1)) ~> sinkTeacherCsvRemainder\nsplitEnrollments@profile1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tpartitionFileNames:['studentenrollment.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{Section SIS ID},\n\t\t{SIS ID} = splitEnrollments@profile1@{SIS ID}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkStudentEnrollmentCsvProfile1\nsplitEnrollments@profile2 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tpartitionFileNames:['studentenrollment.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{Section SIS ID},\n\t\t{SIS ID} = splitEnrollments@profile2@{SIS ID}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkStudentEnrollmentCsvProfile2\nsplitEnrollments@remainder sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tpartitionFileNames:['studentenrollment.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{Section SIS ID},\n\t\t{SIS ID} = splitEnrollments@remainder@{SIS ID}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkStudentEnrollmentCsvRemainder\nsplitTeacherroster@profile1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tpartitionFileNames:['teacherroster.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{Section SIS ID},\n\t\t{SIS ID} = splitTeacherroster@profile1@{SIS ID}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkTeacherRosterCsvProfile1\nsplitTeacherroster@profile2 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tpartitionFileNames:['teacherroster.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{Section SIS ID},\n\t\t{SIS ID} = splitTeacherroster@profile2@{SIS ID}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkTeacherRosterCsvProfile2\nsplitTeacherroster@remainder sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{Section SIS ID} as string,\n\t\t{SIS ID} as string\n\t),\n\tpartitionFileNames:['teacherroster.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{Section SIS ID},\n\t\t{SIS ID} = splitTeacherroster@remainder@{SIS ID}\n\t),\n\tpartitionBy('hash', 1)) ~> sinkTeacherRosterCsvRemainder\nsplitSections@profile1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{Section Name} as string,\n\t\t{Section Number} as string,\n\t\t{Term SIS ID} as string,\n\t\t{Term Name} as string,\n\t\t{Term StartDate} as string,\n\t\t{Term EndDate} as string,\n\t\t{Course SIS ID} as string,\n\t\t{Course Name} as string,\n\t\t{Course Number} as string,\n\t\t{Course Description} as string,\n\t\t{Course Subject} as string,\n\t\tPeriods as string,\n\t\tStatus as string\n\t),\n\tpartitionFileNames:['section.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{Section Name},\n\t\t{Section Number},\n\t\t{Term SIS ID},\n\t\t{Term Name},\n\t\t{Term StartDate},\n\t\t{Term EndDate},\n\t\t{Course SIS ID},\n\t\t{Course Name},\n\t\t{Course Number},\n\t\t{Course Description},\n\t\t{Course Subject},\n\t\tPeriods,\n\t\tStatus\n\t),\n\tpartitionBy('hash', 1)) ~> sinkSectionCsvProfile1\nsplitSections@profile2 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{Section Name} as string,\n\t\t{Section Number} as string,\n\t\t{Term SIS ID} as string,\n\t\t{Term Name} as string,\n\t\t{Term StartDate} as string,\n\t\t{Term EndDate} as string,\n\t\t{Course SIS ID} as string,\n\t\t{Course Name} as string,\n\t\t{Course Number} as string,\n\t\t{Course Description} as string,\n\t\t{Course Subject} as string,\n\t\tPeriods as string,\n\t\tStatus as string\n\t),\n\tpartitionFileNames:['section.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{Section Name},\n\t\t{Section Number},\n\t\t{Term SIS ID},\n\t\t{Term Name},\n\t\t{Term StartDate},\n\t\t{Term EndDate},\n\t\t{Course SIS ID},\n\t\t{Course Name},\n\t\t{Course Number},\n\t\t{Course Description},\n\t\t{Course Subject},\n\t\tPeriods,\n\t\tStatus\n\t),\n\tpartitionBy('hash', 1)) ~> sinkSectionCsvProfile2\nsplitSections@remainder sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\t{SIS ID} as string,\n\t\t{School SIS ID} as string,\n\t\t{Section Name} as string,\n\t\t{Section Number} as string,\n\t\t{Term SIS ID} as string,\n\t\t{Term Name} as string,\n\t\t{Term StartDate} as string,\n\t\t{Term EndDate} as string,\n\t\t{Course SIS ID} as string,\n\t\t{Course Name} as string,\n\t\t{Course Number} as string,\n\t\t{Course Description} as string,\n\t\t{Course Subject} as string,\n\t\tPeriods as string,\n\t\tStatus as string\n\t),\n\tpartitionFileNames:['section.csv'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\t{SIS ID},\n\t\t{School SIS ID},\n\t\t{Section Name},\n\t\t{Section Number},\n\t\t{Term SIS ID},\n\t\t{Term Name},\n\t\t{Term StartDate},\n\t\t{Term EndDate},\n\t\t{Course SIS ID},\n\t\t{Course Name},\n\t\t{Course Number},\n\t\t{Course Description},\n\t\t{Course Subject},\n\t\tPeriods,\n\t\tStatus\n\t),\n\tpartitionBy('hash', 1)) ~> sinkSectionCsvRemainder"
+		}
+	}
+}

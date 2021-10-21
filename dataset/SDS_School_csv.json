@@ -1,0 +1,103 @@
+{
+	"name": "SDS_School_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADL",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"directory": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "SchoolDataSync"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().directory",
+					"type": "Expression"
+				},
+				"fileSystem": "sds"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "SIS ID",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "School Number",
+				"type": "String"
+			},
+			{
+				"name": "School NCES_ID",
+				"type": "String"
+			},
+			{
+				"name": "State ID",
+				"type": "String"
+			},
+			{
+				"name": "Grade Low",
+				"type": "String"
+			},
+			{
+				"name": "Grade High",
+				"type": "String"
+			},
+			{
+				"name": "Principal SIS ID",
+				"type": "String"
+			},
+			{
+				"name": "Principal Name",
+				"type": "String"
+			},
+			{
+				"name": "Principal Secondary Email",
+				"type": "String"
+			},
+			{
+				"name": "Address",
+				"type": "String"
+			},
+			{
+				"name": "City",
+				"type": "String"
+			},
+			{
+				"name": "State",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Zip",
+				"type": "String"
+			},
+			{
+				"name": "Phone",
+				"type": "String"
+			},
+			{
+				"name": "Zone",
+				"type": "String"
+			}
+		]
+	}
+}

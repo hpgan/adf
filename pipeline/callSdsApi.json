@@ -75,7 +75,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": "https://graph.microsoft.com/beta/education/synchronizationProfiles/4519a9c7-9144-4075-a3e4-f503250a566d/uploadUrl",
-					"method": "GET"
+					"method": "GET",
+					"headers": {
+						"Authorization": {
+							"value": "@concat('Bearer ',activity('GetBearToken').output.access_token)",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],

@@ -85,7 +85,7 @@
 				}
 			},
 			{
-				"name": "Set variable1",
+				"name": "setSASUrlParts",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
@@ -95,7 +95,10 @@
 						]
 					}
 				],
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": ""
+				}
 			}
 		],
 		"annotations": []

@@ -55,7 +55,7 @@
 				}
 			},
 			{
-				"name": "upload",
+				"name": "GetUploadUrl",
 				"type": "WebActivity",
 				"dependsOn": [
 					{

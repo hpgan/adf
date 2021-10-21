@@ -53,6 +53,30 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "upload",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "GetBearToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://graph.microsoft.com/beta/education/synchronizationProfiles/4519a9c7-9144-4075-a3e4-f503250a566d/uploadUrl",
+					"method": "GET"
+				}
 			}
 		],
 		"annotations": []

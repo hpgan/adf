@@ -1,0 +1,47 @@
+{
+	"name": "dt_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "school_marcus",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "demo"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "sourcedId",
+				"type": "String"
+			},
+			{
+				"name": "title",
+				"type": "String"
+			},
+			{
+				"name": "type",
+				"type": "String"
+			},
+			{
+				"name": "schoolYear",
+				"type": "String"
+			},
+			{
+				"name": "startDate",
+				"type": "String"
+			},
+			{
+				"name": "endDate",
+				"type": "String"
+			}
+		]
+	}
+}

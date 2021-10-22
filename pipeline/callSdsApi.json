@@ -132,7 +132,7 @@
 							"type": "Expression"
 						}
 					},
-					"body": "sadfsadf"
+					"body": ""
 				}
 			},
 			{
@@ -156,8 +156,58 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "dt_source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_dest",
+						"type": "DatasetReference",
+						"parameters": {
+							"sasUriParam": {
+								"value": "@{variables('SASUrlParts')[0]}?@{variables('SASUrlParts')[1]}",
+								"type": "Expression"
+							},
+							"sdsProfileId": "4519a9c7-9144-4075-a3e4-f503250a566d"
+						}
+					}
+				]
 			}
 		],
 		"variables": {

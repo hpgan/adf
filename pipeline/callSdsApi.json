@@ -97,8 +97,11 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "",
-					"value": ""
+					"variableName": "SASUrlParts",
+					"value": {
+						"value": "@split(activity('getUploadUrl').output.value,'?')",
+						"type": "Expression"
+					}
 				}
 			}
 		],

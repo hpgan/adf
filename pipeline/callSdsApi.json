@@ -103,6 +103,60 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "uploadCsvFilesToSDS",
+				"description": "Copies the sds formatted csv files into the SDS blob storage container for the configured sync profile",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "setSASUrlParts",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			},
+			{
+				"name": "VerifyUploadAndStartSync",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "uploadCsvFilesToSDS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://graph.microsoft.com/beta/education/synchronizationProfiles/4519a9c7-9144-4075-a3e4-f503250a566d/start",
+					"method": "POST",
+					"headers": {
+						"Authorization": {
+							"value": "@concat('Bearer ',activity('GetBearToken').output.access_token)",
+							"type": "Expression"
+						}
+					}
+				}
 			}
 		],
 		"variables": {

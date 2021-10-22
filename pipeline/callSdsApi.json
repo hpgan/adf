@@ -97,10 +97,16 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": ""
+					"variableName": "",
+					"value": ""
 				}
 			}
 		],
+		"variables": {
+			"SASUrlParts": {
+				"type": "Array"
+			}
+		},
 		"annotations": []
 	}
 }

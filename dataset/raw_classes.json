@@ -1,0 +1,43 @@
+{
+	"name": "raw_classes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzFileShare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureFileStorageLocation",
+				"folderPath": "sds_multi/classes"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "sourcedId",
+				"type": "String"
+			},
+			{
+				"name": "orgSourcedId",
+				"type": "String"
+			},
+			{
+				"name": "title",
+				"type": "String"
+			},
+			{
+				"name": "sessionSourcedIds",
+				"type": "String"
+			},
+			{
+				"name": "courseSourcedId",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -56,7 +56,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "dt_source",
+						"referenceName": "academicSessions",
 						"type": "DatasetReference"
 					}
 				]

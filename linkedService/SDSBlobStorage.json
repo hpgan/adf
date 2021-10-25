@@ -1,0 +1,16 @@
+{
+	"name": "SDSBlobStorage",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"type": "AzureBlobStorage",
+		"annotations": [],
+		"typeProperties": {
+			"sasUri": "@{linkedService.sasUriParam}"
+		},
+		"parameters": {
+			"sasUriParam": {
+				"type": "String"
+			}
+		}
+	}
+}

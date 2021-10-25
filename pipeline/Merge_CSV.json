@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "MergeAcadSessions",
+				"name": "Merge_AcademicSessions",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {

@@ -19,7 +19,9 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureFileStorageReadSettings",
-							"fileListPath": "sds_multi/academicsSessions",
+							"recursive": true,
+							"wildcardFolderPath": "sds_multi/academicsSessions",
+							"wildcardFileName": "*.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {

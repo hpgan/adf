@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText1",
+	"name": "raw_acadsessions",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzFileShare",

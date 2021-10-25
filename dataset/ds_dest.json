@@ -2,7 +2,7 @@
 	"name": "ds_dest",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "school_marcus",
+			"referenceName": "SDSBlobStorage",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {

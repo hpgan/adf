@@ -508,7 +508,7 @@
 						"storeSettings": {
 							"type": "AzureFileStorageReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": "sds_multi/userflags",
+							"wildcardFolderPath": "sds_multi/usersflags",
 							"wildcardFileName": "*.csv",
 							"enablePartitionDiscovery": false
 						},

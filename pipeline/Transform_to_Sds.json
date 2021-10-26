@@ -637,10 +637,6 @@
 						"type": "DataFlowReference"
 					},
 					"staging": {
-						"linkedService": {
-							"referenceName": "school_marcus",
-							"type": "LinkedServiceReference"
-						},
 						"folderPath": "demo-dest"
 					},
 					"compute": {

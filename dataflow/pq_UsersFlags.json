@@ -1,0 +1,20 @@
+{
+	"name": "pq_UsersFlags",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "userflags",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  userflags",
+					"dataset": {
+						"referenceName": "userflags",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"script": "section Section1;\r\nshared userflags = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/userflags.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = userflags,\r\n  #\"Removed duplicates\" = Table.Distinct(Source, {\"userSourcedId\", \"flag\"})\r\nin\r\n  #\"Removed duplicates\";\r\n",
+			"documentLocale": "en-us"
+		}
+	}
+}

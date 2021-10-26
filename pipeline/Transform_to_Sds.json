@@ -633,7 +633,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "qry_ETL",
+						"referenceName": "pq_Sessions",
 						"type": "DataFlowReference"
 					},
 					"staging": {

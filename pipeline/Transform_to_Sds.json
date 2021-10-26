@@ -678,7 +678,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "pq_Sessions",
+						"referenceName": "pq_classes",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -695,7 +695,7 @@
 										"referenceName": "dt_transformed",
 										"type": "DatasetReference"
 									},
-									"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['classes.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> Sinkdt_transformed"
+									"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['classes.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\tsourcedId,\n\t\torgSourcedId,\n\t\ttitle,\n\t\tsessionSourcedIds,\n\t\tcourseSourcedId\n\t),\n\tpartitionBy('hash', 1)) ~> Sinkdt_transformed"
 								}
 							]
 						}

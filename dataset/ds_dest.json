@@ -3,7 +3,10 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "SDSBlobStorage",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"sasUriParam": "https://sdsprodusencryptedcsvstg.blob.core.windows.net/"
+			}
 		},
 		"parameters": {
 			"sasUriParam": {

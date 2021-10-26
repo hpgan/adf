@@ -23,11 +23,11 @@
 		},
 		"schema": [
 			{
-				"name": "114001",
+				"name": "userSourcedId",
 				"type": "String"
 			},
 			{
-				"name": "iep",
+				"name": "flag",
 				"type": "String"
 			}
 		]

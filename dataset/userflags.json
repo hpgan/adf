@@ -18,13 +18,16 @@
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
+			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
+				"name": "114001",
 				"type": "String"
 			},
 			{
+				"name": "iep",
 				"type": "String"
 			}
 		]

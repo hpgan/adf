@@ -1,0 +1,9 @@
+{
+	"name": "pg_courses",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": []
+		}
+	}
+}

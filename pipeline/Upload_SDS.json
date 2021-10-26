@@ -198,7 +198,14 @@
 				"outputs": [
 					{
 						"referenceName": "ds_dest",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"sasUriParam": {
+								"value": "@{variables('SASUrlParts')[0]}?@{variables('SASUrlParts')[1]}",
+								"type": "Expression"
+							},
+							"sdsProfileId": "4519a9c7-9144-4075-a3e4-f503250a566d"
+						}
 					}
 				]
 			}

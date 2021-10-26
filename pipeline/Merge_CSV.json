@@ -302,7 +302,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "demographics",
+						"referenceName": "enrollments",
 						"type": "DatasetReference"
 					}
 				]

@@ -191,7 +191,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dt_source",
+						"referenceName": "dt_transformed",
 						"type": "DatasetReference"
 					}
 				],

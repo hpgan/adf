@@ -637,7 +637,7 @@
 						"type": "DataFlowReference"
 					},
 					"staging": {
-						"folderPath": "stage1"
+						"folderPath": ""
 					},
 					"compute": {
 						"coreCount": 8,

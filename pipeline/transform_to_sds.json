@@ -1,5 +1,5 @@
 {
-	"name": "Merge_CSV",
+	"name": "transform_to_sds",
 	"properties": {
 		"activities": [
 			{
@@ -613,8 +613,8 @@
 				]
 			},
 			{
-				"name": "Data flow1",
-				"type": "ExecuteDataFlow",
+				"name": "Power Query1",
+				"type": "ExecuteWranglingDataflow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "1.00:00:00",
@@ -628,8 +628,7 @@
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
-					},
-					"traceLevel": "Fine"
+					}
 				}
 			}
 		],

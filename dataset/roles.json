@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "csv_21"
+			"name": "csv_21/merged_data"
 		},
 		"annotations": [],
 		"type": "DelimitedText",

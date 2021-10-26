@@ -1,5 +1,5 @@
 {
-	"name": "raw_acadsessions",
+	"name": "raw_data",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzFileShare",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureFileStorageLocation",
-				"folderPath": "sds_multi/academicsSessions"
+				"folderPath": "sds_multi/"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

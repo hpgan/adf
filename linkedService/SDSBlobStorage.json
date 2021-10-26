@@ -2,11 +2,6 @@
 	"name": "SDSBlobStorage",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
-		"parameters": {
-			"sasToken": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "AzureBlobStorage",
 		"typeProperties": {

@@ -613,7 +613,7 @@
 				]
 			},
 			{
-				"name": "Power Query1",
+				"name": "QR_ETL",
 				"type": "ExecuteWranglingDataflow",
 				"dependsOn": [
 					{
@@ -693,7 +693,22 @@
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
-					}
+					},
+					"queries": [
+						{
+							"queryName": "UserQuery",
+							"dataflowSinks": [
+								{
+									"name": "Sinkdt_source",
+									"dataset": {
+										"referenceName": "dt_source",
+										"type": "DatasetReference"
+									},
+									"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tsourcedId as string,\n\t\ttitle as string,\n\t\ttype as string,\n\t\tschoolYear as string,\n\t\tstartDate as string,\n\t\tendDate as string\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Sinkdt_source"
+								}
+							]
+						}
+					]
 				}
 			}
 		],

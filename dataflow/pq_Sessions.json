@@ -1,0 +1,20 @@
+{
+	"name": "pq_Sessions",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "academicSessions",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  academicSessions",
+					"dataset": {
+						"referenceName": "academicSessions",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"script": "section Section1;\r\nshared academicSessions = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/academicSessions.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = academicSessions\r\nin\r\n  Source;\r\n",
+			"documentLocale": "en-us"
+		}
+	}
+}

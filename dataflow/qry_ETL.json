@@ -1,5 +1,5 @@
 {
-	"name": "qy_orgs",
+	"name": "qry_ETL",
 	"properties": {
 		"type": "WranglingDataFlow",
 		"typeProperties": {

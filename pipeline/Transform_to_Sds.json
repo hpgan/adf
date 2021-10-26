@@ -690,6 +690,13 @@
 						"referenceName": "qry_ETL",
 						"type": "DataFlowReference"
 					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "school_marcus",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "demo-dest"
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"

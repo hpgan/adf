@@ -633,7 +633,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "pq_Sessions",
+						"referenceName": "pq_AcadSessions",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -678,7 +678,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "pq_classes",
+						"referenceName": "pq_Classes",
 						"type": "DataFlowReference"
 					},
 					"compute": {

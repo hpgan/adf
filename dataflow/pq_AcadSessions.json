@@ -1,5 +1,5 @@
 {
-	"name": "pq_Sessions",
+	"name": "pq_AcadSessions",
 	"properties": {
 		"type": "WranglingDataFlow",
 		"typeProperties": {

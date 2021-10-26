@@ -5,15 +5,6 @@
 			"referenceName": "SDSBlobStorage",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"sasUriParam": {
-				"type": "string"
-			},
-			"sdsProfileId": {
-				"type": "string",
-				"defaultValue": "4519a9c7-9144-4075-a3e4-f503250a566d"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

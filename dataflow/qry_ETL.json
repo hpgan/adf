@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"name": "academicSessions",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  academicSessions",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> academicSessions",
 					"dataset": {
 						"referenceName": "academicSessions",
 						"type": "DatasetReference"
@@ -14,7 +14,7 @@
 				},
 				{
 					"name": "classes",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  classes",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> classes",
 					"dataset": {
 						"referenceName": "classes",
 						"type": "DatasetReference"
@@ -22,7 +22,7 @@
 				},
 				{
 					"name": "courses",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  courses",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> courses",
 					"dataset": {
 						"referenceName": "courses",
 						"type": "DatasetReference"
@@ -30,7 +30,7 @@
 				},
 				{
 					"name": "demographics",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  demographics",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> demographics",
 					"dataset": {
 						"referenceName": "demographics",
 						"type": "DatasetReference"
@@ -38,7 +38,7 @@
 				},
 				{
 					"name": "enrollments",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  enrollments",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> enrollments",
 					"dataset": {
 						"referenceName": "enrollments",
 						"type": "DatasetReference"
@@ -46,7 +46,7 @@
 				},
 				{
 					"name": "orgs",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  orgs",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> orgs",
 					"dataset": {
 						"referenceName": "orgs",
 						"type": "DatasetReference"
@@ -54,7 +54,7 @@
 				},
 				{
 					"name": "relationships",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  relationships",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> relationships",
 					"dataset": {
 						"referenceName": "relationships",
 						"type": "DatasetReference"
@@ -62,7 +62,7 @@
 				},
 				{
 					"name": "roles",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  roles",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> roles",
 					"dataset": {
 						"referenceName": "roles",
 						"type": "DatasetReference"
@@ -70,7 +70,7 @@
 				},
 				{
 					"name": "users",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  users",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> users",
 					"dataset": {
 						"referenceName": "users",
 						"type": "DatasetReference"
@@ -78,14 +78,14 @@
 				},
 				{
 					"name": "userflags",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  userflags",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> userflags",
 					"dataset": {
 						"referenceName": "userflags",
 						"type": "DatasetReference"
 					}
 				}
 			],
-			"script": "section Section1;\r\nshared academicSessions = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/academicSessions.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared classes = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/classes.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared courses = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/courses.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared demographics = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/demographics.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared enrollments = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/enrollments.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared orgs = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/orgs.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared relationships = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/relationships.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared roles = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/roles.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared users = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/users.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true]),\r\n  #\"Removed duplicates\" = Table.Distinct(PromotedHeaders, {\"sourcedId\"})\r\nin\r\n  #\"Removed duplicates\";\r\nshared userflags = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/userflags.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true]),\r\n  #\"Removed duplicates\" = Table.Distinct(PromotedHeaders, {\"userSourcedId\"})\r\nin\r\n  #\"Removed duplicates\";\r\nshared UserQuery = let\r\n  Source = academicSessions\r\nin\r\n  Source;\r\n",
+			"script": "section Section1;\r\nshared academicSessions = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/academicSessions.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true]),\r\n  #\"Removed duplicates\" = Table.Distinct(PromotedHeaders, {\"sourcedId\"})\r\nin\r\n  #\"Removed duplicates\";\r\nshared classes = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/classes.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared courses = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/courses.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared demographics = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/demographics.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared enrollments = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/enrollments.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared orgs = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/orgs.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared relationships = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/relationships.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared roles = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/roles.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared users = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/users.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared userflags = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/userflags.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = academicSessions\r\nin\r\n  Source;\r\n",
 			"documentLocale": "en-us"
 		}
 	}

@@ -2,10 +2,15 @@
 	"name": "SDSBlobStorage",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
+		"parameters": {
+			"sasUriParam": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "AzureBlobStorage",
 		"typeProperties": {
-			"sasUri": "https://sdsprodusencryptedcsvstg.blob.core.windows.net"
+			"sasUri": "@{linkedService().sasUriParam}"
 		}
 	}
 }

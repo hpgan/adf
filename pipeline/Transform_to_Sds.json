@@ -637,7 +637,11 @@
 						"type": "DataFlowReference"
 					},
 					"staging": {
-						"folderPath": "demo-dest"
+						"linkedService": {
+							"referenceName": "school_marcus",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "stage1"
 					},
 					"compute": {
 						"coreCount": 8,

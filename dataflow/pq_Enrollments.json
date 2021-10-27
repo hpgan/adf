@@ -6,14 +6,14 @@
 			"sources": [
 				{
 					"name": "enrollments",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  enrollments",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> enrollments",
 					"dataset": {
 						"referenceName": "enrollments",
 						"type": "DatasetReference"
 					}
 				}
 			],
-			"script": "section Section1;\r\nshared enrollments = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/enrollments.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = enrollments,\r\n  #\"Removed duplicates\" = Table.Distinct(Source, {\"classSourcedId\"})\r\nin\r\n  #\"Removed duplicates\";\r\n",
+			"script": "section Section1;\r\nshared enrollments = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/enrollments.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = enrollments\r\nin\r\n  Source;\r\n",
 			"documentLocale": "en-us"
 		}
 	}

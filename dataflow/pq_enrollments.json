@@ -13,7 +13,7 @@
 					}
 				}
 			],
-			"script": "section Section1;\r\nshared enrollments = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/enrollments.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.None]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = enrollments,\r\n  #\"Marked key columns\" = Table.AddKey(Source, {\"classSourcedId\", \"userSourcedId\"}, false)\r\nin\r\n  #\"Marked key columns\";\r\n",
+			"script": "section Section1;\r\nshared enrollments = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://cs110037ffe88b9a22a.blob.core.windows.net/demo/enrollments.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.None]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = enrollments\r\nin\r\n  Source;\r\n",
 			"documentLocale": "en-us"
 		}
 	}

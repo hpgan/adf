@@ -20,7 +20,7 @@
 					"headers": {
 						"Content-Type": "application/x-www-form-urlencoded",
 						"Authorization": {
-							"value": "@concat('Basic ', base64(concat(pipeline().parameters.Id,':',pipeline().parameters.secret)))",
+							"value": "Basic UnZjb2hLejl6SEk0OkUxaUVGdXNhTmY4MXh6Q3h3SGZib2xrQw==",
 							"type": "Expression"
 						}
 					},

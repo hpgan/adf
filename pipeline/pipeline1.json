@@ -76,7 +76,7 @@
 					"body": {
 						"academicSubjects": [
 							{
-								"academicSubjectDescriptor": "Mathematic"
+								"academicSubjectDescriptor": "TEST"
 							}
 						],
 						"assessmentIdentifier": "AM001",

@@ -76,7 +76,7 @@
 					"body": {
 						"academicSubjects": [
 							{
-								"academicSubjectDescriptor": "uri://ed-fi.org/AcademicSubjectDescriptor#English Language Arts"
+								"academicSubjectDescriptor": "uri://ed-fi.org/AcademicSubjectDescriptor#Advanced Mathematics"
 							}
 						],
 						"assessmentIdentifier": "AM001",

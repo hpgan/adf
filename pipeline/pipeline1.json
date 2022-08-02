@@ -194,6 +194,36 @@
 						"_etag": "string"
 					}
 				}
+			},
+			{
+				"name": "List Assessment",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Set token",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://api.ed-fi.org/v5.3/api/data/v3/ed-fi/assessments?offset=0&limit=25&totalCount=false",
+					"method": "GET",
+					"headers": {
+						"authorization": {
+							"value": "@concat('Bearer ', variables('access_token'))",
+							"type": "Expression"
+						}
+					}
+				}
 			}
 		],
 		"parameters": {

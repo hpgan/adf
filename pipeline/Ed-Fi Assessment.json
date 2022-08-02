@@ -175,7 +175,25 @@
 						},
 						"Content-Type": "application/json"
 					},
-					"body": "{\n    \"studentAssessmentIdentifier\": \"/Qhqqe/gI4p3RguP68ZEDArGHM64FKnCg/RLHG8c\",\n    \"administrationDate\": \"2021-09-28T15:00:00Z\",\n    \"assessmentReference\": {\n        \"assessmentIdentifier\": \"01774fa3-06f1-47fe-8801-c8b1e65057f2\",\n        \"namespace\": \"uri://ed-fi.org/Assessment/Assessment.xml\",\n        \"link\": {\n          \"rel\": \"string\",\n          \"href\": \"string\"\n        }\n      },\n    \"studentReference\": {\n      \"studentUniqueId\": \"604906\",\n      \"link\": {\n      \"rel\": \"string\",\n      \"href\": \"string\"\n    }\n  }"
+					"body": {
+						"studentAssessmentIdentifier": "/Qhqqe/gI4p3RguP68ZEDArGHM64FKnCg/RLHG8c",
+						"administrationDate": "2021-09-28T15:00:00Z",
+						"assessmentReference": {
+							"assessmentIdentifier": "01774fa3-06f1-47fe-8801-c8b1e65057f2",
+							"namespace": "uri://ed-fi.org/Assessment/Assessment.xml",
+							"link": {
+								"rel": "string",
+								"href": "string"
+							}
+						},
+						"studentReference": {
+							"studentUniqueId": "604906",
+							"link": {
+								"rel": "string",
+								"href": "string"
+							}
+						}
+					}
 				}
 			}
 		],

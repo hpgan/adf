@@ -19,7 +19,10 @@
 					"method": "POST",
 					"headers": {
 						"Content-Type": "application/x-www-form-urlencoded",
-						"Authorization": "Basic UnZjb2hLejl6SEk0OkUxaUVGdXNhTmY4MXh6Q3h3SGZib2xrQw=="
+						"Authorization": {
+							"value": "@base64(pipeline().parameters.credential)",
+							"type": "Expression"
+						}
 					},
 					"body": "grant_type=client_credentials"
 				}

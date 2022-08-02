@@ -23,12 +23,37 @@
 					},
 					"body": "grant_type=client_credentials"
 				}
+			},
+			{
+				"name": "Set token",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get_accessToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "access_token",
+					"value": {
+						"value": "@activity('Get_accessToken').output.access_token",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
 			"credential": {
 				"type": "String",
 				"defaultValue": "RvcohKz9zHI4:E1iEFusaNf81xzCxwHfbolkC"
+			}
+		},
+		"variables": {
+			"access_token": {
+				"type": "String"
 			}
 		},
 		"annotations": []

@@ -20,7 +20,7 @@
 					"headers": {
 						"Content-Type": "application/x-www-form-urlencoded",
 						"Authorization": {
-							"value": "@base64(concat(pipeline().parameters.clientId,pipeline().parameters.key))",
+							"value": "@base64ToString(concat(pipeline().parameters.clientId,pipeline().parameters.key))",
 							"type": "Expression"
 						}
 					},

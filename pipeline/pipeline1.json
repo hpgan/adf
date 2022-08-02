@@ -68,7 +68,7 @@
 					"method": "POST",
 					"headers": {
 						"authorization": {
-							"value": "@concat('Bearer', variables('access_token'))",
+							"value": "@concat('Bearer ', variables('access_token'))",
 							"type": "Expression"
 						},
 						"Content-Type": "application/json"

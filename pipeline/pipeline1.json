@@ -76,7 +76,7 @@
 					"body": {
 						"academicSubjects": [
 							{
-								"academicSubjectDescriptor": "TEST"
+								"academicSubjectDescriptor": "uri://ed-fi.org/AcademicSubjectDescriptor#English Language Arts"
 							}
 						],
 						"assessmentIdentifier": "AM001",

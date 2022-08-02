@@ -43,6 +43,158 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "New Assessment",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Set token",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://api.ed-fi.org/v5.3/api/data/v3/ed-fi/assessments",
+					"method": "POST",
+					"headers": {
+						"authorization": {
+							"value": "@concat('Bearer', variables('access_token'))",
+							"type": "Expression"
+						},
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"id": "string",
+						"academicSubjects": [
+							{
+								"academicSubjectDescriptor": "string"
+							}
+						],
+						"assessmentIdentifier": "string",
+						"namespace": "string",
+						"educationOrganizationReference": {
+							"educationOrganizationId": 0,
+							"link": {
+								"rel": "string",
+								"href": "string"
+							}
+						},
+						"adaptiveAssessment": true,
+						"assessedGradeLevels": [
+							{
+								"gradeLevelDescriptor": "string"
+							}
+						],
+						"assessmentCategoryDescriptor": "string",
+						"assessmentFamily": "string",
+						"assessmentForm": "string",
+						"assessmentTitle": "string",
+						"assessmentVersion": 0,
+						"contentStandard": {
+							"publicationStatusDescriptor": "string",
+							"beginDate": "2022-08-02",
+							"endDate": "2022-08-02",
+							"publicationDate": "2022-08-02",
+							"publicationYear": 0,
+							"title": "string",
+							"uri": "string",
+							"version": "string",
+							"mandatingEducationOrganizationReference": {
+								"educationOrganizationId": 0,
+								"link": {
+									"rel": "string",
+									"href": "string"
+								}
+							},
+							"authors": [
+								{
+									"author": "string"
+								}
+							]
+						},
+						"identificationCodes": [
+							{
+								"assessmentIdentificationSystemDescriptor": "string",
+								"assigningOrganizationIdentificationCode": "string",
+								"identificationCode": "string"
+							}
+						],
+						"languages": [
+							{
+								"languageDescriptor": "string"
+							}
+						],
+						"maxRawScore": 0,
+						"nomenclature": "string",
+						"performanceLevels": [
+							{
+								"assessmentReportingMethodDescriptor": "string",
+								"performanceLevelDescriptor": "string",
+								"resultDatatypeTypeDescriptor": "string",
+								"maximumScore": "string",
+								"minimumScore": "string"
+							}
+						],
+						"period": {
+							"assessmentPeriodDescriptor": "string",
+							"beginDate": "2022-08-02",
+							"endDate": "2022-08-02"
+						},
+						"platformTypes": [
+							{
+								"platformTypeDescriptor": "string"
+							}
+						],
+						"programs": [
+							{
+								"programReference": {
+									"educationOrganizationId": 0,
+									"programName": "string",
+									"programTypeDescriptor": "string",
+									"link": {
+										"rel": "string",
+										"href": "string"
+									}
+								}
+							}
+						],
+						"revisionDate": "2022-08-02",
+						"scores": [
+							{
+								"assessmentReportingMethodDescriptor": "string",
+								"resultDatatypeTypeDescriptor": "string",
+								"maximumScore": "string",
+								"minimumScore": "string"
+							}
+						],
+						"sections": [
+							{
+								"sectionReference": {
+									"localCourseCode": "string",
+									"schoolId": 0,
+									"schoolYear": 0,
+									"sectionIdentifier": "string",
+									"sessionName": "string",
+									"link": {
+										"rel": "string",
+										"href": "string"
+									}
+								}
+							}
+						],
+						"_etag": "string"
+					}
+				}
 			}
 		],
 		"parameters": {

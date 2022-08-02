@@ -19,12 +19,25 @@
 					"method": "POST",
 					"headers": {
 						"Content-Type": "application/x-www-form-urlencoded",
-						"Authorization": "Basic UnZjb2hLejl6SEk0OkUxaUVGdXNhTmY4MXh6Q3h3SGZib2xrQw=="
+						"Authorization": {
+							"value": "@base64(concat(pipeline().parameters.clientId,pipeline().parameters.key))",
+							"type": "Expression"
+						}
 					},
 					"body": "grant_type=client_credentials"
 				}
 			}
 		],
+		"parameters": {
+			"clientId": {
+				"type": "String",
+				"defaultValue": "RvcohKz9zHI4"
+			},
+			"key": {
+				"type": "String",
+				"defaultValue": "E1iEFusaNf81xzCxwHfbolkC"
+			}
+		},
 		"annotations": []
 	}
 }

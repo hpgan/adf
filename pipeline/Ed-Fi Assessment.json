@@ -20,7 +20,7 @@
 					"headers": {
 						"Content-Type": "application/x-www-form-urlencoded",
 						"Authorization": {
-							"value": "@concat('Basic ', base64(pipeline().parameters.credential))",
+							"value": "@concat('Basic ', base64(concat(pipeline().parameters.Id,':',pipeline().parameters.secret)))",
 							"type": "Expression"
 						}
 					},
@@ -201,10 +201,6 @@
 			}
 		],
 		"parameters": {
-			"credential": {
-				"type": "String",
-				"defaultValue": ":E1iEFusaNf81xzCxwHfbolkC"
-			},
 			"Id": {
 				"type": "string",
 				"defaultValue": "RvcohKz9zHI4"

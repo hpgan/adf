@@ -45,7 +45,7 @@
 				}
 			},
 			{
-				"name": "New Assessment",
+				"name": "Upsert Assessment",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
@@ -76,121 +76,12 @@
 					"body": {
 						"academicSubjects": [
 							{
-								"academicSubjectDescriptor": "uri://ed-fi.org/AcademicSubjectDescriptor#Advanced Mathematics"
+								"academicSubjectDescriptor": "uri://ed-fi.org/AcademicSubjectDescriptor#Mathematics"
 							}
 						],
-						"assessmentIdentifier": "AM001",
-						"namespace": "EdFi",
-						"educationOrganizationReference": {
-							"educationOrganizationId": 0,
-							"link": {
-								"rel": "ref",
-								"href": "www.microsoft.com"
-							}
-						},
-						"adaptiveAssessment": true,
-						"assessedGradeLevels": [
-							{
-								"gradeLevelDescriptor": "Pass or Fail"
-							}
-						],
-						"assessmentCategoryDescriptor": "Advance",
-						"assessmentFamily": "string",
-						"assessmentForm": "string",
+						"assessmentIdentifier": "ae049cb3-33d0-431f-b0f3-a751df7217ef",
+						"namespace": "uri://ed-fi.org/Assessment/Assessment.xml",
 						"assessmentTitle": "string",
-						"assessmentVersion": 0,
-						"contentStandard": {
-							"publicationStatusDescriptor": "string",
-							"beginDate": "2022-08-02",
-							"endDate": "2023-08-02",
-							"publicationDate": "2022-08-02",
-							"publicationYear": 2022,
-							"title": "string",
-							"uri": "string",
-							"version": "string",
-							"mandatingEducationOrganizationReference": {
-								"educationOrganizationId": 0,
-								"link": {
-									"rel": "string",
-									"href": "string"
-								}
-							},
-							"authors": [
-								{
-									"author": "Marcus Gan"
-								}
-							]
-						},
-						"identificationCodes": [
-							{
-								"assessmentIdentificationSystemDescriptor": "string",
-								"assigningOrganizationIdentificationCode": "string",
-								"identificationCode": "string"
-							}
-						],
-						"languages": [
-							{
-								"languageDescriptor": "string"
-							}
-						],
-						"maxRawScore": 0,
-						"nomenclature": "string",
-						"performanceLevels": [
-							{
-								"assessmentReportingMethodDescriptor": "string",
-								"performanceLevelDescriptor": "string",
-								"resultDatatypeTypeDescriptor": "string",
-								"maximumScore": "400",
-								"minimumScore": "100"
-							}
-						],
-						"period": {
-							"assessmentPeriodDescriptor": "AY2022 Term 1",
-							"beginDate": "2022-08-02",
-							"endDate": "2023-08-02"
-						},
-						"platformTypes": [
-							{
-								"platformTypeDescriptor": "string"
-							}
-						],
-						"programs": [
-							{
-								"programReference": {
-									"educationOrganizationId": 0,
-									"programName": "string",
-									"programTypeDescriptor": "string",
-									"link": {
-										"rel": "string",
-										"href": "string"
-									}
-								}
-							}
-						],
-						"revisionDate": "2022-09-02",
-						"scores": [
-							{
-								"assessmentReportingMethodDescriptor": "string",
-								"resultDatatypeTypeDescriptor": "string",
-								"maximumScore": "string",
-								"minimumScore": "string"
-							}
-						],
-						"sections": [
-							{
-								"sectionReference": {
-									"localCourseCode": "string",
-									"schoolId": 0,
-									"schoolYear": 0,
-									"sectionIdentifier": "string",
-									"sessionName": "string",
-									"link": {
-										"rel": "string",
-										"href": "string"
-									}
-								}
-							}
-						],
 						"_etag": "string"
 					}
 				}

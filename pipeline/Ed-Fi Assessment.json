@@ -203,7 +203,15 @@
 		"parameters": {
 			"credential": {
 				"type": "String",
-				"defaultValue": "RvcohKz9zHI4:E1iEFusaNf81xzCxwHfbolkC"
+				"defaultValue": ":E1iEFusaNf81xzCxwHfbolkC"
+			},
+			"Id": {
+				"type": "string",
+				"defaultValue": "RvcohKz9zHI4"
+			},
+			"secret": {
+				"type": "string",
+				"defaultValue": "E1iEFusaNf81xzCxwHfbolkC"
 			}
 		},
 		"variables": {

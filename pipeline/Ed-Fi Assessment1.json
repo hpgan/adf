@@ -1,0 +1,220 @@
+{
+	"name": "Ed-Fi Assessment1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get_accessToken",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://api.ed-fi.org/v5.3/api/oauth/token",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/x-www-form-urlencoded",
+						"Authorization": {
+							"value": "@concat('Basic ', base64(concat(pipeline().parameters.Id,':',pipeline().parameters.secret)))",
+							"type": "Expression"
+						}
+					},
+					"body": "grant_type=client_credentials"
+				}
+			},
+			{
+				"name": "Set token",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get_accessToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "access_token",
+					"value": {
+						"value": "@activity('Get_accessToken').output.access_token",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Upsert Assessment",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Set token",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://api.ed-fi.org/v5.3/api/data/v3/ed-fi/assessments",
+					"method": "POST",
+					"headers": {
+						"authorization": {
+							"value": "@concat('Bearer ', variables('access_token'))",
+							"type": "Expression"
+						},
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"academicSubjects": [
+							{
+								"academicSubjectDescriptor": "uri://ed-fi.org/AcademicSubjectDescriptor#Mathematics"
+							}
+						],
+						"assessmentIdentifier": "ae049cb3-33d0-431f-b0f3-a751df7217ef",
+						"namespace": "uri://ed-fi.org/Assessment/Assessment.xml",
+						"assessmentTitle": "string",
+						"_etag": "string"
+					}
+				}
+			},
+			{
+				"name": "List Assessment",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Set token",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://api.ed-fi.org/v5.3/api/data/v3/ed-fi/assessments?offset=0&limit=25&totalCount=false",
+					"method": "GET",
+					"headers": {
+						"authorization": {
+							"value": "@concat('Bearer ', variables('access_token'))",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "List Student Assessment",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Set token",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://api.ed-fi.org:443/v5.3/api/data/v3/ed-fi/studentAssessments?offset=0&limit=25&totalCount=false",
+					"method": "GET",
+					"headers": {
+						"authorization": {
+							"value": "@concat('Bearer ', variables('access_token'))",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Upsert Student Assessment",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Set token",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://api.ed-fi.org:443/v5.3/api/data/v3/ed-fi/studentAssessments",
+					"method": "POST",
+					"headers": {
+						"authorization": {
+							"value": "@concat('Bearer ', variables('access_token'))",
+							"type": "Expression"
+						},
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"studentAssessmentIdentifier": "/Qhqqe/gI4p3RguP68ZEDArGHM64FKnCg/RLHG8c",
+						"administrationDate": "2021-09-28T15:00:00Z",
+						"assessmentReference": {
+							"assessmentIdentifier": "01774fa3-06f1-47fe-8801-c8b1e65057f2",
+							"namespace": "uri://ed-fi.org/Assessment/Assessment.xml",
+							"link": {
+								"rel": "string",
+								"href": "string"
+							}
+						},
+						"studentReference": {
+							"studentUniqueId": "604906",
+							"link": {
+								"rel": "string",
+								"href": "string"
+							}
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Id": {
+				"type": "string",
+				"defaultValue": "RvcohKz9zHI4"
+			},
+			"secret": {
+				"type": "string",
+				"defaultValue": "E1iEFusaNf81xzCxwHfbolkC"
+			}
+		},
+		"variables": {
+			"access_token": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}

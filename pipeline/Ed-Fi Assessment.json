@@ -200,16 +200,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"Id": {
-				"type": "string",
-				"defaultValue": "RvcohKz9zHI4"
-			},
-			"secret": {
-				"type": "string",
-				"defaultValue": "E1iEFusaNf81xzCxwHfbolkC"
-			}
-		},
 		"variables": {
 			"access_token": {
 				"type": "String"

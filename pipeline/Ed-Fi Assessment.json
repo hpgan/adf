@@ -145,6 +145,31 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "Upsert Student Assessment",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://api.ed-fi.org:443/v5.3/api/data/v3/ed-fi/studentAssessments",
+					"method": "POST",
+					"headers": {
+						"authorization": {
+							"value": "@concat('Bearer ', variables('access_token'))",
+							"type": "Expression"
+						},
+						"Content-Type": "application/json"
+					},
+					"body": "{\n    \"studentAssessmentIdentifier\": \"/Qhqqe/gI4p3RguP68ZEDArGHM64FKnCg/RLHG8c\",\n    \"administrationDate\": \"2021-09-28T15:00:00Z\",\n    \"assessmentReference\": {\n        \"assessmentIdentifier\": \"01774fa3-06f1-47fe-8801-c8b1e65057f2\",\n        \"namespace\": \"uri://ed-fi.org/Assessment/Assessment.xml\",\n        \"link\": {\n          \"rel\": \"string\",\n          \"href\": \"string\"\n        }\n      },\n    \"studentReference\": {\n      \"studentUniqueId\": \"604906\",\n      \"link\": {\n      \"rel\": \"string\",\n      \"href\": \"string\"\n    }\n  }"
+				}
 			}
 		],
 		"parameters": {

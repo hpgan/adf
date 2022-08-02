@@ -20,7 +20,7 @@
 					"headers": {
 						"Content-Type": "application/x-www-form-urlencoded",
 						"Authorization": {
-							"value": "@base64ToString(concat(pipeline().parameters.clientId,pipeline().parameters.key))",
+							"value": "@base64()",
 							"type": "Expression"
 						}
 					},
@@ -29,13 +29,9 @@
 			}
 		],
 		"parameters": {
-			"clientId": {
+			"credential": {
 				"type": "String",
-				"defaultValue": "RvcohKz9zHI4"
-			},
-			"key": {
-				"type": "String",
-				"defaultValue": "E1iEFusaNf81xzCxwHfbolkC"
+				"defaultValue": "RvcohKz9zHI4:E1iEFusaNf81xzCxwHfbolkC"
 			}
 		},
 		"annotations": []
